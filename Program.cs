@@ -1,3 +1,5 @@
+using MathXGame.Data;
+using Microsoft.EntityFrameworkCore;
 namespace MathXGame
 {
     public class Program
@@ -8,6 +10,17 @@ namespace MathXGame
 
             // Add services to the container.
             builder.Services.AddControllersWithViews();
+
+            // Configure the database context
+            builder.Services.AddDbContext<ApplicationDbContext>(options =>
+                options.UseSqlite(builder.Configuration.GetConnectionString("DefaultConnection")));
+
+
+            // Add session support
+            builder.Services.AddSession(options =>
+            {
+                options.IdleTimeout = TimeSpan.FromDays(1); // Set session expiration to 1 day
+            });
 
             var app = builder.Build();
 
@@ -25,6 +38,8 @@ namespace MathXGame
             app.UseRouting();
 
             app.UseAuthorization();
+
+            app.UseSession();
 
             app.MapControllerRoute(
                 name: "default",
