@@ -1,0 +1,253 @@
+﻿@model IEnumerable<MathXGame.Controllers.Challenge>
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Math Challenges</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f0f2f5;
+            margin: 0;
+            padding: 0;
+        }
+
+        /* Main header */
+        .main-header {
+            color: black;
+            /* padding: 20px; */
+            margin-top: 40px;
+            margin-left: 100px;
+            text-align: left;
+            font-size: 2.5em;
+            font-family: 'Arial', sans-serif;
+        }
+
+        /* Container for overall layout */
+        .container {
+            display: flex;
+            justify-content: space-evenly;
+            align-items: flex-start;
+            padding: 20px;
+        }
+
+        /* Container for challenges list */
+        .challenges-container {
+            width: 600px;
+            max-height: 600px;
+            overflow-y: auto;
+            border: 1px solid #ddd;
+            border-radius: 10px;
+            background-color: #fff;
+            padding: 20px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .challenges-header {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .challenges-header h2 {
+            margin: 0;
+            color: #333;
+            font-size: 2em;
+        }
+
+        /* Styles for individual challenge cards */
+        .card {
+            padding: 20px;
+            margin: 10px 0;
+            border: 1px solid #ddd;
+            border-radius: 10px;
+            background: linear-gradient(135deg, #f9f9f9, #e9e9e9);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .card:hover {
+            background: linear-gradient(135deg, #e0e0e0, #d0d0d0);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+            transform: scale(1.02);
+        }
+
+        .card h3 {
+            color: #333;
+            margin: 0 0 10px 0;
+            font-size: 1.5em;
+        }
+
+        .card p {
+            color: #666;
+            margin: 0;
+        }
+
+        .card.selected {
+            border-color: #007bff;
+            background: linear-gradient(135deg, #d0e0ff, #a0c4ff);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+        }
+
+        /* Configuration section styles */
+        .config-container {
+            width: 35%;
+            padding: 20px;
+            border: 1px solid #ddd;
+            border-radius: 10px;
+            background-color: #fff;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .config-container h3 {
+            margin-top: 0;
+            color: #333;
+            font-size: 1.8em;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        .form-row {
+            display: flex;
+            justify-content: space-between;
+            gap: 10px;
+        }
+
+        .form-row label {
+            flex: 1;
+            font-weight: bold;
+        }
+
+        .form-row input[type="number"] {
+            flex: 1;
+            margin-left: 10px;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 1em;
+        }
+
+        .form-checkbox {
+            display: flex;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+
+        .form-checkbox input[type="checkbox"] {
+            margin-right: 10px;
+        }
+
+        .form-checkbox label {
+            margin-left: 10px;
+            font-weight: normal;
+        }
+
+        .config-container input[type="number"], .config-container input[type="checkbox"] {
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 1em;
+        }
+
+        .config-container button {
+            background-color: #007bff;
+            color: white;
+            border: none;
+            padding: 15px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            font-size: 1em;
+            width: 100%;
+        }
+
+        .config-container button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <div class="main-header">
+        Math Challenges
+    </div>
+
+    <div class="container">
+        <div class="challenges-container">
+            <div class="challenges-header">
+                <h2>Select a Challenge</h2>
+            </div>
+            @foreach (var challenge in Model)
+            {
+                <div class="card" data-action="@Url.Action(challenge.Action)">
+                    <h3>@challenge.Name</h3>
+                    <p>@challenge.Description</p>
+                </div>
+            }
+        </div>
+        <div class="config-container">
+            <h3>Challenge Configuration</h3>
+            <form id="challengeForm" method="post">
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="minNumber">Minimum Number:</label>
+                        <input type="number" id="minNumber" name="minNumber" value="10" required />
+                    </div>
+                    <div class="form-group">
+                        <label for="maxNumber">Maximum Number:</label>
+                        <input type="number" id="maxNumber" name="maxNumber" value="100" required />
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="timerInSeconds">Timer (Seconds):</label>
+                        <input type="number" id="timerInSeconds" name="timerInSeconds" value="30" required />
+                    </div>
+                    <div class="form-group">
+                        <label for="numberOfQuestions">Number of Questions:</label>
+                        <input type="number" id="numberOfQuestions" name="numberOfQuestions" value="10" required />
+                    </div>
+					<input type="hidden" id="selectedChallenge" name="selectedChallenge"/>
+                </div>
+ <div class="form-checkbox">
+        <input type="checkbox" id="addition" name="addition" value="true" checked />
+        <label for="addition">Enable Addition</label>
+    </div>
+    <div class="form-checkbox">
+        <input type="checkbox" id="subtraction" name="subtraction" value="true" />
+        <label for="subtraction">Enable Subtraction</label>
+    </div>
+    <div class="form-checkbox">
+        <input type="checkbox" id="multiplication" name="multiplication" value="true" />
+        <label for="multiplication">Enable Multiplication</label>
+    </div>
+    <div class="form-checkbox">
+        <input type="checkbox" id="division" name="division" value="true" />
+        <label for="division">Enable Division</label>
+    </div>
+                <button type="submit">Start Challenge</button>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        // JavaScript for card selection
+        const cards = document.querySelectorAll('.card');
+
+        cards.forEach(card => {
+            card.addEventListener('click', () => {
+                cards.forEach(c => c.classList.remove('selected'));
+                card.classList.add('selected');
+                const action = card.getAttribute('data-action');
+				const challengeName = card.querySelector('h3').textContent;
+                document.getElementById('challengeForm').action = action;
+				document.getElementById('selectedChallenge').value = challengeName;
+
+            });
+        });
+    </script>
+</body>
+</html>
