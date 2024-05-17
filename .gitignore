@@ -361,3 +361,6 @@ MigrationBackup/
 
 # Fody - auto-generated XML schema
 FodyWeavers.xsd
+/DataBase/MathXGame.db
+/DataBase/MathXGame.db-shm
+/DataBase/MathXGame.db-wal
