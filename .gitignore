@@ -364,3 +364,4 @@ FodyWeavers.xsd
 /DataBase/MathXGame.db
 /DataBase/MathXGame.db-shm
 /DataBase/MathXGame.db-wal
+/Migrations/
