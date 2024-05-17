@@ -15,7 +15,18 @@ namespace MathXGame.Controllers
 
         public IActionResult Index()
         {
-            return View();
+            // Check if user is logged in
+            var currentUser = HttpContext.Session.GetString("CurrentUser");
+            if (!string.IsNullOrEmpty(currentUser))
+            {
+                // User is logged in, show the home page
+                return View();
+            }
+            else
+            {
+                // User is not logged in, redirect to the login page
+                return RedirectToAction("Login", "Account");
+            }
         }
 
         public IActionResult Privacy()
