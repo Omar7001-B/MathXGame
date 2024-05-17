@@ -66,5 +66,15 @@ namespace MathXGame.Controllers
             // Redirect to login page after successful registration
             return RedirectToAction("Login");
         }
+
+        // make me a logout action
+        public IActionResult Logout()
+        {
+            // Clear the session
+            HttpContext.Session.Clear();
+
+            // Redirect to the login page
+            return RedirectToAction("Login");
+        }
     }
 }
