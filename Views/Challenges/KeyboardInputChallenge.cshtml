@@ -1,0 +1,384 @@
+﻿@model MathXGame.Controllers.ChallengeConfiguration
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@Model.SelectedChallenge</title>
+    <link rel="stylesheet" type="text/css" href="styles.css">
+    <style>
+body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: #f9f9f9;
+}
+
+.container {
+  width: 80%;
+  margin: 0 auto;
+}
+
+h1 {
+  color: #333;
+  margin-top: 20px;
+}
+
+.top-bar,
+.bottom-bar {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  margin: 10px 0;
+}
+
+.box {
+  background-color: #fff;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  padding: 20px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.main-content {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  margin: 20px 0;
+}
+
+.left-card {
+  width: 70%;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.problem-container {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  margin-bottom: 20px;
+}
+
+.problem {
+  margin-top: 20px;
+  font-size: 2em;
+  color: #333;
+}
+
+#userAnswer {
+  width: 100%;
+  padding: 15px;
+  margin: 30px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  box-sizing: border-box;
+  font-size: 1.5em;
+  text-align: center;
+}
+
+#feedback {
+  margin-top: 10px;
+  text-align: center;
+  color: #d9534f; /* Bootstrap danger color */
+}
+
+.right-table {
+  width: 25%;
+}
+
+.right-table table {
+  width: 100%;
+  border-collapse: collapse;
+  background-color: #fff;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.right-table th,
+.right-table td {
+  border: 1px solid #ccc;
+  padding: 10px;
+  text-align: left;
+}
+
+.right-table th {
+  background-color: #f1f1f1;
+  color: #333;
+}
+
+.right-table tbody tr {
+  height: 3em;
+}
+
+.stats {
+  display: flex;
+  justify-content: space-around;
+  width: 100%;
+}
+
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h1>@Model.SelectedChallenge</h1>
+
+        <div class="top-bar">
+            <div class="stats box">
+                <div id="countdownTimer">Time Left: <span id="timer">@Model.TimerInSeconds</span></div>
+                <div>Speed: <span id="speed">0</span> seconds per problem</div>
+                <div>Accuracy: <span id="accuracy">100</span>%</div>
+            </div>
+        </div>
+
+        <div class="main-content">
+            <div class="left-card">
+                <div class="problem">Problem: <span id="problem">Loading...</span></div>
+                <input type="number" id="userAnswer" class="input-field" placeholder="Enter your answer" />
+                <div id="feedback"></div>
+            </div>
+
+            <div class="right-table">
+                <table id="problemsTable">
+                    <thead>
+                        <tr>
+                            <th>Expression</th>
+                            <th>Right Answer</th>
+                            <th>Your Answer</th>
+                        </tr>
+                    </thead>
+                    <tbody id="problems">
+                        <!-- Dynamically generated rows will go here -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <div class="bottom-bar">
+            <div class="stats box">
+                <div>Total Problems: <span id="totalProblems">@Model.NumberOfQuestions</span></div>
+                <div>Problems Left: <span id="problemsLeft">@Model.NumberOfQuestions</span></div>
+                <div>Solved Problems: <span id="solvedProblems">0</span></div>
+                <div>Misses: <span id="misses">0</span></div>
+            </div>
+        </div>
+    </div>
+    <script>
+var totalProblems = @Model.NumberOfQuestions;
+var problemsLeft = @Model.NumberOfQuestions;
+var minRange = @Model.MinNumber;
+var maxRange = @Model.MaxNumber;
+var operations = [];
+
+        var True = true;
+        var False = false;
+
+// Conditionally populate operations based on model values
+if (@Model.Addition) {
+    operations.push("+");
+}
+if (@Model.Subtraction) {
+    operations.push("-");
+}
+if (@Model.Multiplication) {
+    operations.push("*");
+}
+if (@Model.Division) {
+    operations.push("/");
+}
+
+var solvedProblems = 0;
+var misses = 0;
+var timerElement = document.getElementById("timer");
+var problemsLeftElement = document.getElementById("problemsLeft");
+var solvedProblemsElement = document.getElementById("solvedProblems");
+var missesElement = document.getElementById("misses");
+var speedElement = document.getElementById("speed");
+var accuracyElement = document.getElementById("accuracy");
+var problemsTableBody = document.getElementById("problems");
+var userAnswerElement = document.getElementById("userAnswer");
+var feedbackElement = document.getElementById("feedback");
+
+
+function generateProblem() {
+  var randomNumber1 =
+    Math.floor(Math.random() * (maxRange - minRange + 1)) + minRange;
+  var randomNumber2 =
+    Math.floor(Math.random() * (maxRange - minRange + 1)) + minRange;
+
+  // Debug output to check operations array
+  console.log("Operations:", operations);
+
+  var operation = operations[Math.floor(Math.random() * operations.length)]; // Randomly select an operation
+  console.log("Selected Operation:", operation);
+
+  var problemText =
+    randomNumber1 + " " + operation + " " + randomNumber2 + " = ?";
+  return {
+    problem: problemText,
+    answer: eval(randomNumber1 + operation + randomNumber2),
+  };
+}
+
+function updateProblemList(problem, userAnswer, correct) {
+  var row = problemsTableBody.insertRow(0); // Insert at the top
+  var expressionCell = row.insertCell(0);
+  var rightAnswerCell = row.insertCell(1);
+  var yourAnswerCell = row.insertCell(2);
+
+  expressionCell.textContent = problem.problem;
+  rightAnswerCell.textContent = problem.answer;
+  yourAnswerCell.textContent = userAnswer;
+
+  if (correct) {
+    yourAnswerCell.style.color = "green";
+  } else {
+    yourAnswerCell.style.color = "red";
+  }
+
+  if (problemsTableBody.rows.length > 5) {
+    problemsTableBody.deleteRow(5);
+  }
+}
+
+function initializeProblem() {
+  var problemObject = generateProblem();
+  document.getElementById("problem").textContent = problemObject.problem;
+  return problemObject;
+}
+
+function addInitialRowsToTable() {
+  // Add 10 rows to the table
+  for (var i = 0; i < 5; i++) {
+    var row = problemsTableBody.insertRow();
+    for (var j = 0; j < 3; j++) {
+      row.insertCell();
+    }
+  }
+}
+
+function updateStats() {
+  solvedProblemsElement.textContent = solvedProblems;
+  missesElement.textContent = misses;
+  problemsLeftElement.textContent = problemsLeft;
+
+  var speed = (totalProblems / (totalProblems - problemsLeft)).toFixed(2);
+  speedElement.textContent = speed;
+
+  var accuracy = ((solvedProblems / (solvedProblems + misses)) * 100).toFixed(
+    2
+  );
+  accuracyElement.textContent = accuracy;
+}
+
+function sendStatsToServer() {
+  // Prepare data to send to the server
+  var data = {
+    totalProblems: totalProblems,
+    solvedProblems: solvedProblems,
+    misses: misses,
+    speed: parseFloat(speedElement.textContent),
+    accuracy: parseFloat(accuracyElement.textContent),
+  };
+
+  // Send data to the server using AJAX or fetch API
+  fetch("/ChallengeCompleted", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(data),
+  })
+    .then((response) => {
+      if (response.ok) {
+        console.log("Statistics sent successfully");
+      } else {
+        console.error("Failed to send statistics");
+      }
+    })
+    .catch((error) => {
+      console.error("Error sending statistics:", error);
+    });
+}
+
+updateStats();
+addInitialRowsToTable();
+
+var currentProblem = initializeProblem();
+var correctAnswer = currentProblem.answer;
+
+var countdown = setInterval(function () {
+  timerElement.textContent = parseInt(timerElement.textContent) - 1;
+  if (parseInt(timerElement.textContent) <= 0) {
+    clearInterval(countdown);
+    // Handle timer expiration here
+    sendStatsToServer();
+  }
+}, 1000);
+
+userAnswerElement.addEventListener("input", function () {
+  var userAnswer = parseInt(userAnswerElement.value);
+  if (userAnswer.toString().length >= correctAnswer.toString().length) {
+    if (userAnswer === correctAnswer) {
+      feedbackElement.innerHTML = "Correct!";
+      feedbackElement.style.color = "green";
+      solvedProblems++;
+      updateProblemList(currentProblem, userAnswer, true);
+    } else {
+      feedbackElement.innerHTML = "Incorrect, please try again.";
+      feedbackElement.style.color = "red";
+      misses++;
+      updateProblemList(currentProblem, userAnswer, false);
+    }
+
+    problemsLeft--;
+    updateStats();
+
+    if (problemsLeft > 0) {
+      currentProblem = initializeProblem();
+      correctAnswer = currentProblem.answer;
+    } else {
+      // All problems solved, handle completion
+      sendStatsToServer();
+    }
+
+    userAnswerElement.value = "";
+
+    setTimeout(function () {
+      feedbackElement.textContent = "";
+    }, 2000);
+  }
+});
+
+userAnswerElement.addEventListener("keydown", function (event) {
+  if (event.key === "Enter") {
+    userAnswerElement.blur(); // Lose focus to trigger input event
+  }
+});
+
+window.addEventListener("beforeunload", function (event) {
+  // Cancel the event
+  event.preventDefault();
+  // Chrome requires returnValue to be set
+  event.returnValue = "";
+
+  // Display a confirmation dialog
+  var confirmationMessage =
+    "Are you sure you want to cancel this challenge? All progress will be lost.";
+  event.returnValue = confirmationMessage; // Gecko, Trident, Chrome 34+
+  return confirmationMessage; // Gecko, WebKit, Chrome <34
+});
+
+    </script>
+</body>
+
+</html>
