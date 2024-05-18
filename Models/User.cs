@@ -9,6 +9,7 @@
         public string? FirstName { get; set; }
         public string? LastName { get; set; }
         public DateTime? DateOfBirth { get; set; }
-        public List<Score> Scores { get; set; }
+        public virtual List<Challenge>? Challenges { get; set; }
+        public virtual List<Problem>? Problems { get; set; }
     }
 }
