@@ -1,5 +1,4 @@
-﻿@model MathXGame.Controllers.ChallengeConfiguration
-
+﻿@model MathXGame.Models.Challenge
 <!DOCTYPE html>
 <html lang="en">
 
@@ -188,8 +187,8 @@ h1 {
 
         <div class="bottom-bar">
             <div class="stats box">
-                <div>Total Problems: <span id="totalProblems">@Model.NumberOfQuestions</span></div>
-                <div>Problems Left: <span id="problemsLeft">@Model.NumberOfQuestions</span></div>
+                <div>Total Problems: <span id="totalProblems">@Model.TotalProblems</span></div>
+                <div>Problems Left: <span id="problemsLeft">@Model.TotalProblems</span></div>
                 <div>Solved Problems: <span id="solvedProblems">0</span></div>
                 <div>Misses: <span id="misses">0</span></div>
             </div>
@@ -200,8 +199,8 @@ h1 {
     </div>
 <script>
 // This is just a comment
-        var totalProblems = @Model.NumberOfQuestions;
-        var problemsLeft = @Model.NumberOfQuestions;
+        var totalProblems = @Model.TotalProblems;
+        var problemsLeft = @Model.TotalProblems;
         var minRange = @Model.MinNumber;
         var maxRange = @Model.MaxNumber;
         var operations = [];
@@ -227,15 +226,29 @@ h1 {
         var feedbackElement = document.getElementById("feedback");
         var circlesContainer = document.getElementById("circles");
 
-        var challengeData = {
-            expressions: [],
-            totalProblems: totalProblems,
-            solvedProblems: 0,
-            misses: 0,
-            speed: 0,
-            accuracy: 100,
-            startTime: new Date()
-        };
+		var challengeData = {
+            challengeId: @Model.ChallengeId, 
+			userId: @Model.UserId, // Replace with the actual user ID
+			selectedChallenge: "@Model.SelectedChallenge", // Fill in with the selected challenge type or name
+			totalProblems: @Model.TotalProblems,
+			timerInSeconds: @Model.TimerInSeconds, // Fill in with the timer duration in seconds
+			minNumber: @Model.MinNumber, // Fill in with the minimum number for the range
+			maxNumber: @Model.MaxNumber, // Fill in with the maximum number for the range
+
+			addition: false, // Set to true if addition operation is included, otherwise false
+			subtraction: false, // Set to true if subtraction operation is included, otherwise false
+			multiplication: false, // Set to true if multiplication operation is included, otherwise false
+			division: false, // Set to true if division operation is included, otherwise false
+
+			solvedProblems: 0,
+			misses: 0,
+			speed: 0,
+			accuracy: 100,
+			startTime: new Date().toISOString(),
+			finishTime: null, // This will be set when the challenge finishes
+			problems: [] // Array to hold problem data
+			};
+
 
         function generateProblem() {
             var randomNumber1 = Math.floor(Math.random() * (maxRange - minRange + 1)) + minRange;
@@ -253,6 +266,7 @@ h1 {
             var expressionCell = row.insertCell(0);
             var rightAnswerCell = row.insertCell(1);
             var yourAnswerCell = row.insertCell(2);
+            var isCorrect = false;
 
             expressionCell.textContent = problem.problem;
             rightAnswerCell.textContent = problem.answer;
@@ -260,6 +274,7 @@ h1 {
 
             if (correct) {
                 yourAnswerCell.style.color = "green";
+                isCorrect = true;
             } else {
                 yourAnswerCell.style.color = "red";
             }
@@ -269,12 +284,15 @@ h1 {
             }
 
             // Record data for the challenge summary
-            challengeData.expressions.push({
+            challengeData.problems.push({
+                problemId: 0,
+                challengeId: @Model.ChallengeId,
+                userId: @Model.UserId,
                 expression: problem.problem,
                 rightAnswer: problem.answer,
-                yourAnswer: userAnswer,
-                correct: correct,
-                timeTaken: timeTaken
+                userAnswer: userAnswer,
+                timeTaken: timeTaken,
+                isSolved: correct
             });
         }
 
@@ -307,82 +325,58 @@ h1 {
             problemsLeftElement.textContent = problemsLeft;
 
             var speed = ((new Date() - challengeData.startTime) / (solvedProblems + misses) / 1000).toFixed(2);
-            speedElement.textContent = speed;
+            if(isFinite(speed)) speedElement.textContent = speed;
 
             var accuracy = ((solvedProblems / (solvedProblems + misses)) * 100).toFixed(2);
-            accuracyElement.textContent = accuracy;
+            if(isFinite(accuracy)) accuracyElement.textContent = accuracy;
 
             challengeData.solvedProblems = solvedProblems;
             challengeData.misses = misses;
             challengeData.speed = speed;
             challengeData.accuracy = accuracy;
+            challengeDatafinishTime = new Date();
         }
 
-    function sendStatsToServer() {
-        $.ajax({
-            type: "POST",
-            url: "/Challenges/ProcessChallengeData",
-            data: JSON.stringify(challengeData),
-            contentType: "application/json; charset=utf-8",
-            dataType: "json",
-            success: function (response) {
-                console.log("Success:", response); // Log the response
-                window.location.href = "/Challenges/FinishedChallenge"; // Redirect to the action displaying the data
-            },
-            error: function (xhr, status, error) {
-                console.error("Error occurred:", xhr.responseText); // Log the error response
-            }
-        });
-    }
 
-    /*
-    Working Example
-var challengeData = {
-                TotalProblems: 10,
-                SolvedProblems: 8,
-                Misses: 2,
-                Speed: 5.25,
-                Accuracy: 80,
-                StartTime: new Date().toISOString(), // Convert date to ISO string
-                Expressions: [
-                    {
-                        Expression: "2 + 2",
-                        RightAnswer: "4",
-                        YourAnswer: "4",
-                        Correct: true,
-                        TimeTaken: 2.5
-                    },
-                    {
-                        Expression: "5 * 3",
-                        RightAnswer: "15",
-                        YourAnswer: "12",
-                        Correct: false,
-                        TimeTaken: 3.2
-                    }
-                ]
-            };
+			function sendStatsToServer() {
+				// Update finish time
+				challengeData.finishTime = new Date().toISOString(); 
 
-            // Send data to the ProcessChallengeData action
-            fetch('/Challenges/ProcessChallengeData', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify(challengeData)
-            })
-            .then(response => {
-                if (!response.ok) {
-                    throw new Error('Network response was not ok');
-                }
-                // Redirect to the FinishedChallenge action
-                // window.location.href = '/Challenges/FinishedChallenge';
-                console.log(response)
-            })
-            .catch(error => {
-                console.error('There was a problem with the fetch operation:', error);
-            });
+				// Convert the problems array to a JSON string
+				var problemsJson = JSON.stringify(challengeData.problems);
 
-    */
+				// Create a form element
+				var form = document.createElement('form');
+				form.method = 'post';
+				form.action = '/Challenges/ProcessChallengeData'; // Set the form action to your server-side endpoint
+
+				// Create hidden input fields for each property of the challengeData object
+				for (var key in challengeData) {
+					if (Object.prototype.hasOwnProperty.call(challengeData, key)) {
+						var input = document.createElement('input');
+						input.type = 'hidden';
+						input.name = key;
+						// Check if the current property is the problems array
+						if (key === 'problems') {
+							// Set the value to the JSON string of the problems array
+                            input.name = 'problemsJson';
+							input.value = problemsJson;
+						} else if (typeof challengeData[key] === 'object' && challengeData[key] !== null) {
+							// If the current property is an object (such as date), convert it to JSON string
+							input.value = JSON.stringify(challengeData[key]);
+						} else {
+							input.value = challengeData[key];
+						}
+						form.appendChild(input);
+					}
+				}
+
+				// Append the form to the document body and submit it
+				document.body.appendChild(form);
+				form.submit();
+			}
+        
+
 
         function recordTimeTaken() {
             var currentTime = new Date();
@@ -443,17 +437,6 @@ var challengeData = {
             }
         });
 
-        /*
-
-        window.addEventListener("beforeunload", function(event) {
-            event.preventDefault();
-            var confirmationMessage = "Are you sure you want to cancel this challenge? All progress will be lost.";
-            event.returnValue = confirmationMessage;
-            return confirmationMessage;
-        });
-
-        */
-
         function addInitialRowsToTable() {
             // Add 5 rows to the table
             for (var i = 0; i < 5; i++) {
@@ -469,3 +452,50 @@ var challengeData = {
 </body>
 
 </html>
+<!-- 
+var challengeData = {
+                TotalProblems: 10,
+                SolvedProblems: 8,
+                Misses: 2,
+                Speed: 5.25,
+                Accuracy: 80,
+                StartTime: new Date().toISOString(), // Convert date to ISO string
+                Expressions: [
+                    {
+                        Expression: "2 + 2",
+                        RightAnswer: "4",
+                        YourAnswer: "4",
+                        Correct: true,
+                        TimeTaken: 2.5
+                    },
+                    {
+                        Expression: "5 * 3",
+                        RightAnswer: "15",
+                        YourAnswer: "12",
+                        Correct: false,
+                        TimeTaken: 3.2
+                    }
+                ]
+            };
+
+            // Send data to the ProcessChallengeData action
+            fetch('/Challenges/ProcessChallengeData', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(challengeData)
+            })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                // Redirect to the FinishedChallenge action
+                // window.location.href = '/Challenges/FinishedChallenge';
+                console.log(response)
+            })
+            .catch(error => {
+                console.error('There was a problem with the fetch operation:', error);
+            });
+
+-->
