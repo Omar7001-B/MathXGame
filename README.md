@@ -12,7 +12,7 @@
 	- Number of Questions: Users can specify the number of questions they want to attempt in the challenge.
 
 # Challenges TODO:
-- [ ] Keyboard Input Challenge
+- [x] Keyboard Input Challenge
 - [ ] Multiple Choice Challenge
 - [ ] Missing Operator Challenge
 - [ ] Word Problem Challenge
