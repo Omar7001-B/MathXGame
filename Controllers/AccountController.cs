@@ -25,6 +25,7 @@ namespace MathXGame.Controllers
             {
                 // Authentication successful, store user information in session
                 HttpContext.Session.SetString("CurrentUser", user.Username);
+                HttpContext.Session.SetInt32("UserId", user.Id);
 
                 // Redirect to home page or another desired destination
                 return RedirectToAction("Index", "Home");
