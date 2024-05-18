@@ -25,6 +25,53 @@
 - [ ] Sum Combination Challenge
 - [ ] 12-Question Math Challenge
 
+# Database
+## Users Table
+| Column    | Data Type | Description                          |
+|-----------|-----------|--------------------------------------|
+| user_id   | INT       | Primary Key, unique identifier for each user |
+| username  | VARCHAR   | Username of the user                 |
+| email     | VARCHAR   | Email of the user                    |
+| password  | VARCHAR   | Password (hashed) of the user        |
+
+
+## Challenges Table
+| Column           | Data Type  | Description                                  |
+|------------------|------------|----------------------------------------------|
+| challenge_id     | INT        | Primary Key, unique identifier for each challenge |
+| user_id          | INT        | Foreign Key, references Users(user_id)       |
+| selected_challenge | VARCHAR  | Name or type of the challenge                |
+| min_number       | INT        | Minimum number used in problems              |
+| max_number       | INT        | Maximum number used in problems              |
+| timer_in_seconds | INT        | Duration of the challenge in seconds         |
+| addition         | BOOLEAN    | Indicates if addition problems are included  |
+| subtraction      | BOOLEAN    | Indicates if subtraction problems are included |
+| multiplication   | BOOLEAN    | Indicates if multiplication problems are included |
+| division         | BOOLEAN    | Indicates if division problems are included  |
+| total_problems   | INT        | Total number of problems in the challenge    |
+| solved_problems  | INT        | Number of correctly solved problems          |
+| misses           | INT        | Number of missed problems                    |
+| speed            | DOUBLE     | Average speed of solving problems            |
+| accuracy         | DOUBLE     | Accuracy percentage                          |
+| start_time       | TIMESTAMP  | Timestamp of when the challenge started      |
+| finish_time      | TIMESTAMP  | Timestamp of when the challenge ended        |
+
+
+## Problems Table
+| Column       | Data Type | Description                                  |
+|--------------|-----------|----------------------------------------------|
+| problem_id   | INT       | Primary Key, unique identifier for each problem |
+| challenge_id | INT       | Foreign Key, references Challenges(challenge_id) |
+| user_id      | INT       | Foreign Key, references Users(user_id)       |
+| expression   | VARCHAR   | Math expression (e.g., "5 + 3")              |
+| right_answer | VARCHAR   | Correct answer to the expression             |
+| user_answer  | VARCHAR   | User’s answer to the problem                 |
+| is_solved    | BOOLEAN   | Whether the problem was solved correctly     |
+| time_taken   | INT       | Time taken by the user to solve the problem (in seconds) |
+
+
+
+
 
 # Note Nessacry Packages
 ```bash
