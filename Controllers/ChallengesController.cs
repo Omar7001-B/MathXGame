@@ -1,15 +1,18 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using MathXGame.Models;
+using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json;
 using System.Collections.Generic;
 
 namespace MathXGame.Controllers
 {
-    public class Challenge
+    public class ChallengeSelectItem
     {
         public string Name { get; set; }
         public string Description { get; set; }
         public string Action { get; set; } // Action name corresponding to the challenge
     }
 
+    /*
     public class ChallengeConfiguration
     {
         public string SelectedChallenge { get; set; }
@@ -42,38 +45,39 @@ namespace MathXGame.Controllers
         public bool Correct { get; set; }
         public double TimeTaken { get; set; }
     }
+    */
     public class ChallengesController : Controller
     {
         // GET: /Challenges
         public IActionResult Index()
         {
-            var challenges = new List<Challenge>
+            var challenges = new List<ChallengeSelectItem>
             {
-                new Challenge { Name = "Keyboard Input Challenge", Description = "Enter answers using keyboard input", Action = "KeyboardInputChallenge" },
-                new Challenge { Name = "Multiple Choice Challenge", Description = "Select answers from multiple choices", Action = "MultipleChoiceChallenge" },
-                new Challenge { Name = "Missing Operator Challenge", Description = "Identify missing operators in equations", Action = "MissingOperatorChallenge" },
-                new Challenge { Name = "Word Problem Challenge", Description = "Solve word problems by typing answers in words", Action = "WordProblemChallenge" },
-                new Challenge { Name = "Math Memory Challenge", Description = "Memorize and solve math problems", Action = "MathMemoryChallenge" },
-                new Challenge { Name = "Number Placement Challenge", Description = "Place numbers correctly in equations", Action = "NumberPlacementChallenge" },
-                new Challenge { Name = "Comparison Challenge", Description = "Compare two expressions with <, >, or =", Action = "ComparisonChallenge" },
-                new Challenge { Name = "Solve for X Challenge", Description = "Solve for X in algebraic equations", Action = "SolveForXChallenge" },
-                new Challenge { Name = "True/False Challenge", Description = "Determine if math statements are true or false", Action = "TrueFalseChallenge" },
-                new Challenge { Name = "Number Combination Challenge", Description = "Combine numbers to reach a target sum", Action = "NumberCombinationChallenge" }
+                new ChallengeSelectItem { Name = "Keyboard Input Challenge", Description = "Enter answers using keyboard input", Action = "KeyboardInputChallenge" },
+                new ChallengeSelectItem { Name = "Multiple Choice Challenge", Description = "Select answers from multiple choices", Action = "MultipleChoiceChallenge" },
+                new ChallengeSelectItem { Name = "Missing Operator Challenge", Description = "Identify missing operators in equations", Action = "MissingOperatorChallenge" },
+                new ChallengeSelectItem { Name = "Word Problem Challenge", Description = "Solve word problems by typing answers in words", Action = "WordProblemChallenge" },
+                new ChallengeSelectItem { Name = "Math Memory Challenge", Description = "Memorize and solve math problems", Action = "MathMemoryChallenge" },
+                new ChallengeSelectItem { Name = "Number Placement Challenge", Description = "Place numbers correctly in equations", Action = "NumberPlacementChallenge" },
+                new ChallengeSelectItem { Name = "Comparison Challenge", Description = "Compare two expressions with <, >, or =", Action = "ComparisonChallenge" },
+                new ChallengeSelectItem { Name = "Solve for X Challenge", Description = "Solve for X in algebraic equations", Action = "SolveForXChallenge" },
+                new ChallengeSelectItem { Name = "True/False Challenge", Description = "Determine if math statements are true or false", Action = "TrueFalseChallenge" },
+                new ChallengeSelectItem { Name = "Number Combination Challenge", Description = "Combine numbers to reach a target sum", Action = "NumberCombinationChallenge" }
             };
 
             return View(challenges);
         }
 
-        [HttpPost]
-        public ActionResult ProcessChallengeData([FromBody] ChallengeDataViewModel data)
+        //[HttpPost]
+        public ActionResult ProcessChallengeData(Challenge data, string problemsJson)
         {
+            data.Problems = JsonConvert.DeserializeObject<List<Problem>>(problemsJson);
             // Process the received data
-            // For demonstration purposes, let's assume you want to pass the data to a view
-            return Content("Challenge data processed successfully");
-            return View("FinishedChallenge", data);
+            // For demonstration purposes, let's assume you want to pass the data to a viewList<Problem>?
+            return Content("ChallengeSelectItem data processed successfully");
         }
 
-        public ActionResult FinishedChallenge(ChallengeDataViewModel data)
+        public ActionResult FinishedChallenge(Challenge data)
         {
             // Pass the data to the view
             return View(data);
@@ -84,7 +88,7 @@ namespace MathXGame.Controllers
 
         // POST: /Challenges/Start
         [HttpPost]
-        public IActionResult Start(ChallengeConfiguration configuration)
+        public IActionResult Start(Challenge configuration)
         {
             // Process the challenge configuration submitted by the user
             // You can perform any necessary logic here, such as starting the challenge with the specified settings
@@ -94,50 +98,50 @@ namespace MathXGame.Controllers
             message += $"Number Range: {configuration.MinNumber}-{configuration.MaxNumber}, ";
             message += $"Timer (Seconds): {configuration.TimerInSeconds}, ";
             message += $"Operations: {(configuration.Addition ? "Addition" : "")}{(configuration.Subtraction ? ", Subtraction" : "")}{(configuration.Multiplication ? ", Multiplication" : "")}{(configuration.Division ? ", Division" : "")}, ";
-            message += $"Number of Questions: {configuration.NumberOfQuestions}";
+            message += $"Number of Questions: {configuration.TotalProblems}";
 
             return Content(message);
         }
 
-        // Action method for starting the Keyboard Input Challenge, that takes a configuration object as a parameter
+        // Action method for starting the Keyboard Input ChallengeSelectItem, that takes a configuration object as a parameter
         [HttpPost]
-        public IActionResult KeyboardInputChallenge(ChallengeConfiguration configuration)
+        public IActionResult KeyboardInputChallenge(Challenge configuration)
         {
-            // Process the configuration and start the Keyboard Input Challenge
-            string message = $"Starting Keyboard Input Challenge with the following settings: ";
+            // Process the configuration and start the Keyboard Input ChallengeSelectItem
+            string message = $"Starting Keyboard Input ChallengeSelectItem with the following settings: ";
             message += $"Number Range: {configuration.MinNumber}-{configuration.MaxNumber}, ";
             message += $"Timer (Seconds): {configuration.TimerInSeconds}, ";
             message += $"Operations: {(configuration.Addition ? "Addition" : "")}{(configuration.Subtraction ? ", Subtraction" : "")}{(configuration.Multiplication ? ", Multiplication" : "")}{(configuration.Division ? ", Division" : "")}, ";
-            message += $"Number of Questions: {configuration.NumberOfQuestions}";
+            message += $"Number of Questions: {configuration.TotalProblems}";
 
 
             return View(configuration);
         }
 
-        // Action method for starting the Multiple Choice Challenge, that takes a configuration object as a parameter
+        // Action method for starting the Multiple Choice ChallengeSelectItem, that takes a configuration object as a parameter
         [HttpPost]
-        public IActionResult MultipleChoiceChallenge(ChallengeConfiguration configuration)
+        public IActionResult MultipleChoiceChallenge(Challenge configuration)
         {
-            // Process the configuration and start the Multiple Choice Challenge
-            string message = $"Starting Multiple Choice Challenge with the following settings: ";
+            // Process the configuration and start the Multiple Choice ChallengeSelectItem
+            string message = $"Starting Multiple Choice ChallengeSelectItem with the following settings: ";
             message += $"Number Range: {configuration.MinNumber}-{configuration.MaxNumber}, ";
             message += $"Timer (Seconds): {configuration.TimerInSeconds}, ";
             message += $"Operations: {(configuration.Addition ? "Addition" : "")}{(configuration.Subtraction ? ", Subtraction" : "")}{(configuration.Multiplication ? ", Multiplication" : "")}{(configuration.Division ? ", Division" : "")}, ";
-            message += $"Number of Questions: {configuration.NumberOfQuestions}";
+            message += $"Number of Questions: {configuration.TotalProblems}";
 
             return Content(message);
         }
 
-        // Action method for starting the Missing Operator Challenge, that takes a configuration object as a parameter
+        // Action method for starting the Missing Operator ChallengeSelectItem, that takes a configuration object as a parameter
         [HttpPost]
-        public IActionResult MissingOperatorChallenge(ChallengeConfiguration configuration)
+        public IActionResult MissingOperatorChallenge(Challenge configuration)
         {
-            // Process the configuration and start the Missing Operator Challenge
-            string message = $"Starting Missing Operator Challenge with the following settings: ";
+            // Process the configuration and start the Missing Operator ChallengeSelectItem
+            string message = $"Starting Missing Operator ChallengeSelectItem with the following settings: ";
             message += $"Number Range: {configuration.MinNumber}-{configuration.MaxNumber}, ";
             message += $"Timer (Seconds): {configuration.TimerInSeconds}, ";
             message += $"Operations: {(configuration.Addition ? "Addition" : "")}{(configuration.Subtraction ? ", Subtraction" : "")}{(configuration.Multiplication ? ", Multiplication" : "")}{(configuration.Division ? ", Division" : "")}, ";
-            message += $"Number of Questions: {configuration.NumberOfQuestions}";
+            message += $"Number of Questions: {configuration.TotalProblems}";
 
             return Content(message);
         }
