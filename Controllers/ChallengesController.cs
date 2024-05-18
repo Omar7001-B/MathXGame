@@ -23,6 +23,25 @@ namespace MathXGame.Controllers
         public int NumberOfQuestions { get; set; }
     }
 
+    public class ChallengeDataViewModel
+    {
+        public int TotalProblems { get; set; }
+        public int SolvedProblems { get; set; }
+        public int Misses { get; set; }
+        public double Speed { get; set; }
+        public double Accuracy { get; set; }
+        public DateTime StartTime { get; set; }
+        public ExpressionViewModel[] Expressions { get; set; }
+    }
+
+    public class ExpressionViewModel
+    {
+        public string Expression { get; set; }
+        public string RightAnswer { get; set; }
+        public string YourAnswer { get; set; }
+        public bool Correct { get; set; }
+        public double TimeTaken { get; set; }
+    }
     public class ChallengesController : Controller
     {
         // GET: /Challenges
@@ -44,6 +63,23 @@ namespace MathXGame.Controllers
 
             return View(challenges);
         }
+
+        [HttpPost]
+        public ActionResult ProcessChallengeData([FromBody] ChallengeDataViewModel data)
+        {
+            // Process the received data
+            // For demonstration purposes, let's assume you want to pass the data to a view
+            return Content("Challenge data processed successfully");
+            return View("FinishedChallenge", data);
+        }
+
+        public ActionResult FinishedChallenge(ChallengeDataViewModel data)
+        {
+            // Pass the data to the view
+            return View(data);
+        }
+    
+
 
 
         // POST: /Challenges/Start
