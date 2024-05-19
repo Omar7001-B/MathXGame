@@ -1,7 +1,12 @@
-﻿namespace MathXGame.Models
+﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+
+namespace MathXGame.Models
 {
     public class Challenge
     {
+        [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int ChallengeId { get; set; }
         public int UserId { get; set; }
         // Challenge Configuration
