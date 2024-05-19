@@ -1,4 +1,5 @@
-﻿using MathXGame.Models;
+﻿using MathXGame.Data;
+using MathXGame.Models;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using System.Collections.Generic;
@@ -11,43 +12,10 @@ namespace MathXGame.Controllers
         public string Description { get; set; }
         public string Action { get; set; } // Action name corresponding to the challenge
     }
-
-    /*
-    public class ChallengeConfiguration
-    {
-        public string SelectedChallenge { get; set; }
-        public int MinNumber { get; set; }
-        public int MaxNumber { get; set; }
-        public int TimerInSeconds { get; set; }
-        public bool Addition { get; set; }
-        public bool Subtraction { get; set; }
-        public bool Multiplication { get; set; }
-        public bool Division { get; set; }
-        public int NumberOfQuestions { get; set; }
-    }
-
-    public class ChallengeDataViewModel
-    {
-        public int TotalProblems { get; set; }
-        public int SolvedProblems { get; set; }
-        public int Misses { get; set; }
-        public double Speed { get; set; }
-        public double Accuracy { get; set; }
-        public DateTime StartTime { get; set; }
-        public ExpressionViewModel[] Expressions { get; set; }
-    }
-
-    public class ExpressionViewModel
-    {
-        public string Expression { get; set; }
-        public string RightAnswer { get; set; }
-        public string YourAnswer { get; set; }
-        public bool Correct { get; set; }
-        public double TimeTaken { get; set; }
-    }
-    */
     public class ChallengesController : Controller
     {
+        private readonly ApplicationDbContext _context;
+        public ChallengesController(ApplicationDbContext context) { _context = context; }
         // GET: /Challenges
         public IActionResult Index()
         {
@@ -71,10 +39,88 @@ namespace MathXGame.Controllers
         //[HttpPost]
         public ActionResult ProcessChallengeData(Challenge data, string problemsJson)
         {
-            data.Problems = JsonConvert.DeserializeObject<List<Problem>>(problemsJson);
-            // Process the received data
-            // For demonstration purposes, let's assume you want to pass the data to a viewList<Problem>?
-            return Content("ChallengeSelectItem data processed successfully");
+            if (data == null || string.IsNullOrEmpty(problemsJson))
+                return Content("Invalid data received");
+
+            if (data.ChallengeId == 0)
+            {
+                data.Problems = JsonConvert.DeserializeObject<List<Problem>>(problemsJson);
+                data.UserId = HttpContext.Session.GetInt32("UserId") ?? 0;
+                data.ChallengeId = 0;
+                for (int i = 0; i < data.Problems.Count; i++)
+                {
+                    data.Problems[i].ChallengeId = data.ChallengeId;
+                    data.Problems[i].UserId = data.UserId;
+                }
+                _context.Challenges.Add(data);
+                _context.SaveChanges();
+            }
+            else
+            {
+                // update the challenge
+                // load the problems 
+                var challenge = _context.Challenges.Find(data.ChallengeId);
+                data.Problems = JsonConvert.DeserializeObject<List<Problem>>(problemsJson);
+                foreach (var problem in data.Problems)
+                {
+                    var dbProblem = _context.Problems.Find(problem.ProblemId);
+                    dbProblem.UserAnswer = problem.UserAnswer;
+                    dbProblem.IsSolved = problem.IsSolved;
+                    dbProblem.TimeTaken = problem.TimeTaken;
+                    _context.Problems.Update(dbProblem);
+                }
+                _context.Challenges.Update(challenge);
+                _context.SaveChanges();
+
+                challenge.Speed = _context.Problems.Where(p => p.ChallengeId == data.ChallengeId).Average(p => p.TimeTaken);
+                challenge.Accuracy = _context.Problems.Where(p => p.ChallengeId == data.ChallengeId && p.IsSolved).Count() / _context.Problems.Where(p => p.ChallengeId == data.ChallengeId).Count();
+                challenge.SolvedProblems = _context.Problems.Where(p => p.ChallengeId == data.ChallengeId && p.IsSolved).Count();
+                challenge.Misses = _context.Problems.Where(p => p.ChallengeId == data.ChallengeId && !p.IsSolved).Count();
+
+                _context.Challenges.Update(challenge);
+                _context.SaveChanges();
+            }
+            return RedirectToAction("ViewChallenge", new { id = data.ChallengeId });
+        }
+
+        public IActionResult ViewChallenge(int id)
+        {
+            var challenge = _context.Challenges.Find(id);
+            _context.Entry(challenge).Collection(c => c.Problems).Load();
+            _context.Entry(challenge).Reference(c => c.User).Load();
+
+            if (challenge == null)
+                return Content("ChallengeSelectItem not found");
+            return View(challenge);
+        }
+
+        public IActionResult ReviewChallenge(int challengeId, string reviewType)
+        {
+            var challenge = _context.Challenges.Find(challengeId);
+            if (challenge == null)
+                return Content("ChallengeSelectItem not found");
+            // _context.Entry(challenge).Collection(c => c.Problems).Load();
+            // _context.Entry(challenge).Reference(c => c.User).Load();
+
+            // load the problems
+            challenge.Problems = _context.Problems.Where(p => p.ChallengeId == challengeId).ToList();
+            foreach (var problem in challenge.Problems)
+            {
+                problem.Challenge = null;
+                problem.User = null;
+            }
+
+
+            double speed = challenge.Speed;
+            if (reviewType  == "Incorrect")
+                challenge.Problems = challenge.Problems.Where(p => p.UserAnswer != p.RightAnswer).ToList();
+            else if(reviewType == "Slow")
+                challenge.Problems = challenge.Problems.Where(p => p.TimeTaken > speed).ToList();
+            else if(reviewType == "Both")
+                challenge.Problems = challenge.Problems.Where(p => p.UserAnswer != p.RightAnswer || p.TimeTaken > speed).ToList();
+
+            string viewName = challenge.SelectedChallenge.Replace(" ", "");
+            return View(viewName, challenge);
         }
 
         public ActionResult FinishedChallenge(Challenge data)
@@ -82,26 +128,7 @@ namespace MathXGame.Controllers
             // Pass the data to the view
             return View(data);
         }
-    
 
-
-
-        // POST: /Challenges/Start
-        [HttpPost]
-        public IActionResult Start(Challenge configuration)
-        {
-            // Process the challenge configuration submitted by the user
-            // You can perform any necessary logic here, such as starting the challenge with the specified settings
-
-            // For demonstration purposes, we'll just return a message indicating that the challenge has started
-            string message = $"Starting {configuration.SelectedChallenge} challenge with the following settings: ";
-            message += $"Number Range: {configuration.MinNumber}-{configuration.MaxNumber}, ";
-            message += $"Timer (Seconds): {configuration.TimerInSeconds}, ";
-            message += $"Operations: {(configuration.Addition ? "Addition" : "")}{(configuration.Subtraction ? ", Subtraction" : "")}{(configuration.Multiplication ? ", Multiplication" : "")}{(configuration.Division ? ", Division" : "")}, ";
-            message += $"Number of Questions: {configuration.TotalProblems}";
-
-            return Content(message);
-        }
 
         // Action method for starting the Keyboard Input ChallengeSelectItem, that takes a configuration object as a parameter
         [HttpPost]
@@ -116,34 +143,6 @@ namespace MathXGame.Controllers
 
 
             return View(configuration);
-        }
-
-        // Action method for starting the Multiple Choice ChallengeSelectItem, that takes a configuration object as a parameter
-        [HttpPost]
-        public IActionResult MultipleChoiceChallenge(Challenge configuration)
-        {
-            // Process the configuration and start the Multiple Choice ChallengeSelectItem
-            string message = $"Starting Multiple Choice ChallengeSelectItem with the following settings: ";
-            message += $"Number Range: {configuration.MinNumber}-{configuration.MaxNumber}, ";
-            message += $"Timer (Seconds): {configuration.TimerInSeconds}, ";
-            message += $"Operations: {(configuration.Addition ? "Addition" : "")}{(configuration.Subtraction ? ", Subtraction" : "")}{(configuration.Multiplication ? ", Multiplication" : "")}{(configuration.Division ? ", Division" : "")}, ";
-            message += $"Number of Questions: {configuration.TotalProblems}";
-
-            return Content(message);
-        }
-
-        // Action method for starting the Missing Operator ChallengeSelectItem, that takes a configuration object as a parameter
-        [HttpPost]
-        public IActionResult MissingOperatorChallenge(Challenge configuration)
-        {
-            // Process the configuration and start the Missing Operator ChallengeSelectItem
-            string message = $"Starting Missing Operator ChallengeSelectItem with the following settings: ";
-            message += $"Number Range: {configuration.MinNumber}-{configuration.MaxNumber}, ";
-            message += $"Timer (Seconds): {configuration.TimerInSeconds}, ";
-            message += $"Operations: {(configuration.Addition ? "Addition" : "")}{(configuration.Subtraction ? ", Subtraction" : "")}{(configuration.Multiplication ? ", Multiplication" : "")}{(configuration.Division ? ", Division" : "")}, ";
-            message += $"Number of Questions: {configuration.TotalProblems}";
-
-            return Content(message);
         }
 
     }
