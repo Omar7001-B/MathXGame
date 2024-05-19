@@ -44,15 +44,19 @@ namespace MathXGame.Controllers
 
             if (data.ChallengeId == 0)
             {
-                data.Problems = JsonConvert.DeserializeObject<List<Problem>>(problemsJson);
                 data.UserId = HttpContext.Session.GetInt32("UserId") ?? 0;
                 data.ChallengeId = 0;
-                for (int i = 0; i < data.Problems.Count; i++)
+                _context.Challenges.Add(data);
+                _context.SaveChanges();
+                data.Problems = JsonConvert.DeserializeObject<List<Problem>>(problemsJson);
+
+                for(int i = 0; i < data.Problems.Count; i++)
                 {
                     data.Problems[i].ChallengeId = data.ChallengeId;
                     data.Problems[i].UserId = data.UserId;
                 }
-                _context.Challenges.Add(data);
+
+                _context.Problems.AddRange(data.Problems);
                 _context.SaveChanges();
             }
             else
@@ -72,7 +76,7 @@ namespace MathXGame.Controllers
                 _context.Challenges.Update(challenge);
                 _context.SaveChanges();
 
-                challenge.Speed = _context.Problems.Where(p => p.ChallengeId == data.ChallengeId).Average(p => p.TimeTaken);
+                challenge.Speed = Math.Round(_context.Problems.Where(p => p.ChallengeId == data.ChallengeId).Average(p => p.TimeTaken), 2);
                 challenge.Accuracy = _context.Problems.Where(p => p.ChallengeId == data.ChallengeId && p.IsSolved).Count() / _context.Problems.Where(p => p.ChallengeId == data.ChallengeId).Count();
                 challenge.SolvedProblems = _context.Problems.Where(p => p.ChallengeId == data.ChallengeId && p.IsSolved).Count();
                 challenge.Misses = _context.Problems.Where(p => p.ChallengeId == data.ChallengeId && !p.IsSolved).Count();
