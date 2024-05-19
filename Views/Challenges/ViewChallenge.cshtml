@@ -151,9 +151,8 @@
                </table>
             </div>
          </div>
-         <hr />
-         <div class="review-buttons">
-            <form asp-controller="Challenge" asp-action="Review" method="post">
+         <div class="section review-buttons">
+            <form asp-controller="Challenges" asp-action="ReviewChallenge" method="post">
                <input type="hidden" name="challengeId" value="@Model.ChallengeId" />
                <button type="submit" name="reviewType" value="Incorrect">Review Incorrect</button>
                <button type="submit" name="reviewType" value="Slow">Review Slow</button>
