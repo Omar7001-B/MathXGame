@@ -4,178 +4,38 @@
 
 <head>
     <meta charset="UTF-8">
-	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>@Model.SelectedChallenge</title>
-    <style>
-body {
-  font-family: Arial, sans-serif;
-  margin: 0;
-  padding: 0;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  background-color: #f9f9f9;
-}
-
-.container {
-  width: 80%;
-  margin: 0 auto;
-}
-
-h1 {
-  color: #333;
-  margin-top: 20px;
-}
-
-.top-bar,
-.bottom-bar {
-  width: 100%;
-  display: flex;
-  justify-content: center;
-  margin: 10px 0;
-}
-
-.box {
-  background-color: #fff;
-  border: 1px solid #ccc;
-  border-radius: 8px;
-  padding: 20px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-}
-
-.main-content {
-  display: flex;
-  justify-content: space-between;
-  width: 100%;
-  margin: 20px 0;
-}
-
-.left-card {
-  width: 70%;
-  padding: 20px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-
-.problem-container {
-  width: 100%;
-  display: flex;
-  justify-content: center;
-  margin-bottom: 20px;
-}
-
-.problem {
-  margin-top: 20px;
-  font-size: 2em;
-  color: #333;
-}
-
-#userAnswer {
-  width: 100%;
-  padding: 15px;
-  margin: 30px;
-  border: 1px solid #ccc;
-  border-radius: 5px;
-  box-sizing: border-box;
-  font-size: 1.5em;
-  text-align: center;
-}
-
-#feedback {
-  margin-top: 10px;
-  text-align: center;
-  color: #d9534f; /* Bootstrap danger color */
-}
-
-.right-table {
-  width: 25%;
-}
-
-.right-table table {
-  width: 100%;
-  border-collapse: collapse;
-  background-color: #fff;
-  border: 1px solid #ccc;
-  border-radius: 5px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-}
-
-.right-table th,
-.right-table td {
-  border: 1px solid #ccc;
-  padding: 10px;
-  text-align: left;
-}
-
-.right-table th {
-  background-color: #f1f1f1;
-  color: #333;
-}
-
-.right-table tbody tr {
-  height: 3em;
-}
-
-.stats {
-  display: flex;
-  justify-content: space-around;
-  width: 100%;
-}
-
-        .circle {
-            display: inline-block;
-            width: 20px;
-            height: 20px;
-            border-radius: 50%;
-            margin: 5px;
-        }
-        .circle.green {
-            background-color: green;
-        }
-        .circle.red {
-            background-color: red;
-        }
-        .time-taken {
-            text-align: center;
-            font-size: 12px;
-            color: #555;
-        }
-        .circle-container {
-            display: inline-block;
-            margin: 5px;
-            text-align: center;
-
-    </style>
+    <link rel="stylesheet" href="~/css/KeyboardInputChallenge.css"/>
 </head>
 
 <body>
     <div class="container">
-        <h1>@Model.SelectedChallenge</h1>
+        <h1>@Model.SelectedChallenge 🏆</h1>
 
         <div class="top-bar">
             <div class="stats box">
-                <div id="countdownTimer">Time Left: <span id="timer">@Model.TimerInSeconds</span></div>
-                <div>Speed: <span id="speed">0</span> seconds per problem</div>
-                <div>Accuracy: <span id="accuracy">100</span>%</div>
+                <div id="countdownTimer">⏳ Time Left: <span id="timer">@Model.TimerInSeconds</span></div>
+                <div>⚡ Speed: <span id="speed">0</span> seconds per problem</div>
+                <div>🎯 Accuracy: <span id="accuracy">100</span>%</div>
             </div>
         </div>
 
         <div class="main-content">
             <div class="left-card">
-                <div class="problem">Problem: <span id="problem">Loading...</span></div>
-                <input id="userAnswer" class="input-field" placeholder="Enter your answer" />
-                <div id="feedback"></div>
+                <div class="problem">📝 Problem: <span id="problem">Loading...</span></div>
+                <input id="userAnswer" class="input-field" placeholder="Enter your answer ✍️" />
+                <div id="feedback">🔍</div>
             </div>
 
             <div class="right-table">
                 <table id="problemsTable">
                     <thead>
                         <tr>
-                            <th>Expression</th>
-                            <th>Right Answer</th>
-                            <th>Your Answer</th>
+                            <th>📊 Expression</th>
+                            <th>✅ Right Answer</th>
+                            <th>❓ Your Answer</th>
                         </tr>
                     </thead>
                     <tbody id="problems">
@@ -187,315 +47,21 @@ h1 {
 
         <div class="bottom-bar">
             <div class="stats box">
-                <div>Total Problems: <span id="totalProblems">@Model.TotalProblems</span></div>
-                <div>Problems Left: <span id="problemsLeft">@Model.TotalProblems</span></div>
-                <div>Solved Problems: <span id="solvedProblems">0</span></div>
-                <div>Misses: <span id="misses">0</span></div>
+                <div>🔢 Total Problems: <span id="totalProblems">0</span></div>
+                <div>📉 Problems Left: <span id="problemsLeft">0</span></div>
+                <div>✔️ Solved Problems: <span id="solvedProblems">0</span></div>
+                <div>❌ Misses: <span id="misses">0</span></div>
             </div>
         </div>
-		<div class="results-bar">
-				<div id="circles"></div>
-			</div>
+        <div class="results-bar">
+            <div id="circles"></div>
+        </div>
     </div>
-<script>
-// This is just a comment
-        var totalProblems = @Model.TotalProblems;
-        var problemsLeft = @Model.TotalProblems;
-        var minRange = @Model.MinNumber;
-        var maxRange = @Model.MaxNumber;
-        var operations = [];
-        var solvedProblems = 0;
-        var misses = 0;
-        var lastTime = new Date();
-        var True = true;
-        var False = false;
-
-        if (@Model.Addition) operations.push("+");
-        if (@Model.Subtraction) operations.push("-");
-        if (@Model.Multiplication) operations.push("*");
-        if (@Model.Division) operations.push("/");
-
-        var timerElement = document.getElementById("timer");
-        var problemsLeftElement = document.getElementById("problemsLeft");
-        var solvedProblemsElement = document.getElementById("solvedProblems");
-        var missesElement = document.getElementById("misses");
-        var speedElement = document.getElementById("speed");
-        var accuracyElement = document.getElementById("accuracy");
-        var problemsTableBody = document.getElementById("problems");
-        var userAnswerElement = document.getElementById("userAnswer");
-        var feedbackElement = document.getElementById("feedback");
-        var circlesContainer = document.getElementById("circles");
-
-		var challengeData = {
-            challengeId: @Model.ChallengeId, 
-			userId: @Model.UserId, // Replace with the actual user ID
-			selectedChallenge: "@Model.SelectedChallenge", // Fill in with the selected challenge type or name
-			totalProblems: @Model.TotalProblems,
-			timerInSeconds: @Model.TimerInSeconds, // Fill in with the timer duration in seconds
-			minNumber: @Model.MinNumber, // Fill in with the minimum number for the range
-			maxNumber: @Model.MaxNumber, // Fill in with the maximum number for the range
-
-			addition: false, // Set to true if addition operation is included, otherwise false
-			subtraction: false, // Set to true if subtraction operation is included, otherwise false
-			multiplication: false, // Set to true if multiplication operation is included, otherwise false
-			division: false, // Set to true if division operation is included, otherwise false
-
-			solvedProblems: 0,
-			misses: 0,
-			speed: 0,
-			accuracy: 100,
-			startTime: new Date().toISOString(),
-			finishTime: null, // This will be set when the challenge finishes
-			problems: [] // Array to hold problem data
-			};
-
-
-        function generateProblem() {
-            var randomNumber1 = Math.floor(Math.random() * (maxRange - minRange + 1)) + minRange;
-            var randomNumber2 = Math.floor(Math.random() * (maxRange - minRange + 1)) + minRange;
-            var operation = operations[Math.floor(Math.random() * operations.length)];
-            var problemText = randomNumber1 + " " + operation + " " + randomNumber2 + " = ?";
-            return {
-                problem: problemText,
-                answer: eval(randomNumber1 + operation + randomNumber2)
-            };
-        }
-
-        function updateProblemList(problem, userAnswer, correct, timeTaken) {
-            var row = problemsTableBody.insertRow(0);
-            var expressionCell = row.insertCell(0);
-            var rightAnswerCell = row.insertCell(1);
-            var yourAnswerCell = row.insertCell(2);
-            var isCorrect = false;
-
-            expressionCell.textContent = problem.problem;
-            rightAnswerCell.textContent = problem.answer;
-            yourAnswerCell.textContent = userAnswer;
-
-            if (correct) {
-                yourAnswerCell.style.color = "green";
-                isCorrect = true;
-            } else {
-                yourAnswerCell.style.color = "red";
-            }
-
-            if (problemsTableBody.rows.length > 5) {
-                problemsTableBody.deleteRow(5);
-            }
-
-            // Record data for the challenge summary
-            challengeData.problems.push({
-                problemId: 0,
-                challengeId: @Model.ChallengeId,
-                userId: @Model.UserId,
-                expression: problem.problem,
-                rightAnswer: problem.answer,
-                userAnswer: userAnswer,
-                timeTaken: timeTaken,
-                isSolved: correct
-            });
-        }
-
-        function addCircle(correct, timeTaken) {
-            var circleContainer = document.createElement("div");
-            circleContainer.className = "circle-container";
-
-            var circle = document.createElement("div");
-            circle.className = "circle " + (correct ? "green" : "red");
-
-            var timeText = document.createElement("div");
-            timeText.className = "time-taken";
-            timeText.textContent = timeTaken + "s";
-
-            circleContainer.appendChild(circle);
-            circleContainer.appendChild(timeText);
-
-            circlesContainer.appendChild(circleContainer);
-        }
-
-        function initializeProblem() {
-            var problemObject = generateProblem();
-            document.getElementById("problem").textContent = problemObject.problem;
-            return problemObject;
-        }
-
-        function updateStats() {
-            solvedProblemsElement.textContent = solvedProblems;
-            missesElement.textContent = misses;
-            problemsLeftElement.textContent = problemsLeft;
-
-            var speed = ((new Date() - challengeData.startTime) / (solvedProblems + misses) / 1000).toFixed(2);
-            if(isFinite(speed)) speedElement.textContent = speed;
-
-            var accuracy = ((solvedProblems / (solvedProblems + misses)) * 100).toFixed(2);
-            if(isFinite(accuracy)) accuracyElement.textContent = accuracy;
-
-            challengeData.solvedProblems = solvedProblems;
-            challengeData.misses = misses;
-            challengeData.speed = speed;
-            challengeData.accuracy = accuracy;
-            challengeDatafinishTime = new Date();
-        }
-
-
-			function sendStatsToServer() {
-				// Update finish time
-				challengeData.finishTime = new Date().toISOString(); 
-
-				// Convert the problems array to a JSON string
-				var problemsJson = JSON.stringify(challengeData.problems);
-
-				// Create a form element
-				var form = document.createElement('form');
-				form.method = 'post';
-				form.action = '/Challenges/ProcessChallengeData'; // Set the form action to your server-side endpoint
-
-				// Create hidden input fields for each property of the challengeData object
-				for (var key in challengeData) {
-					if (Object.prototype.hasOwnProperty.call(challengeData, key)) {
-						var input = document.createElement('input');
-						input.type = 'hidden';
-						input.name = key;
-						// Check if the current property is the problems array
-						if (key === 'problems') {
-							// Set the value to the JSON string of the problems array
-                            input.name = 'problemsJson';
-							input.value = problemsJson;
-						} else if (typeof challengeData[key] === 'object' && challengeData[key] !== null) {
-							// If the current property is an object (such as date), convert it to JSON string
-							input.value = JSON.stringify(challengeData[key]);
-						} else {
-							input.value = challengeData[key];
-						}
-						form.appendChild(input);
-					}
-				}
-
-				// Append the form to the document body and submit it
-				document.body.appendChild(form);
-				form.submit();
-			}
-        
-
-
-        function recordTimeTaken() {
-            var currentTime = new Date();
-            var timeTaken = ((currentTime - lastTime) / 1000).toFixed(2);
-            lastTime = currentTime;
-            return timeTaken;
-        }
-
-        updateStats();
-        let currentProblem = initializeProblem();
-        let correctAnswer = currentProblem.answer;
-
-        var countdown = setInterval(() => {
-            timerElement.textContent = parseInt(timerElement.textContent) - 1;
-            if (parseInt(timerElement.textContent) <= 0) {
-                clearInterval(countdown);
-                sendStatsToServer();
-            }
-        }, 1000);
-
-        userAnswerElement.addEventListener("input", function() {
-            var userAnswer = Number(userAnswerElement.value);
-            if (userAnswerElement.value == '-' || userAnswerElement.value == '+' || userAnswerElement.value == '')
-				userAnswer = 0;
-			else if (!isFinite(userAnswerElement.value)) {
-				userAnswerElement.value = userAnswerElement.value.slice(0, -1); 
-				return;
-			}
-
-            if (userAnswerElement.value.toString().length >= correctAnswer.toString().length) {
-                var timeTaken = recordTimeTaken();
-                if (userAnswer === correctAnswer) {
-                    feedbackElement.innerHTML = "Correct!";
-                    feedbackElement.style.color = "green";
-                    solvedProblems++;
-                    updateProblemList(currentProblem, userAnswer, true, timeTaken);
-                    addCircle(true, timeTaken);
-                } else {
-                    feedbackElement.innerHTML = "Incorrect, please try again.";
-                    feedbackElement.style.color = "red";
-                    misses++;
-                    updateProblemList(currentProblem, userAnswer, false, timeTaken);
-                    addCircle(false, timeTaken);
-                }
-
-                problemsLeft--;
-                updateStats();
-
-                if (problemsLeft > 0) {
-                    currentProblem = initializeProblem();
-                    correctAnswer = currentProblem.answer;
-                } else {
-                    sendStatsToServer();
-                }
-
-                userAnswerElement.value = "";
-                setTimeout(() => feedbackElement.textContent = "", 2000);
-            }
-        });
-
-        function addInitialRowsToTable() {
-            // Add 5 rows to the table
-            for (var i = 0; i < 5; i++) {
-                var row = problemsTableBody.insertRow();
-                for (var j = 0; j < 3; j++) {
-                    row.insertCell();
-                }
-            }
-        }
-
-        addInitialRowsToTable();
+    <script>
+        const challengeData = @Html.Raw(Json.Serialize(Model));
+        console.log(challengeData);
     </script>
+    <script src="~/js/KeyboardInputChallenge.js"></script>
 </body>
 
 </html>
-<!-- 
-var challengeData = {
-                TotalProblems: 10,
-                SolvedProblems: 8,
-                Misses: 2,
-                Speed: 5.25,
-                Accuracy: 80,
-                StartTime: new Date().toISOString(), // Convert date to ISO string
-                Expressions: [
-                    {
-                        Expression: "2 + 2",
-                        RightAnswer: "4",
-                        YourAnswer: "4",
-                        Correct: true,
-                        TimeTaken: 2.5
-                    },
-                    {
-                        Expression: "5 * 3",
-                        RightAnswer: "15",
-                        YourAnswer: "12",
-                        Correct: false,
-                        TimeTaken: 3.2
-                    }
-                ]
-            };
-
-            // Send data to the ProcessChallengeData action
-            fetch('/Challenges/ProcessChallengeData', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify(challengeData)
-            })
-            .then(response => {
-                if (!response.ok) {
-                    throw new Error('Network response was not ok');
-                }
-                // Redirect to the FinishedChallenge action
-                // window.location.href = '/Challenges/FinishedChallenge';
-                console.log(response)
-            })
-            .catch(error => {
-                console.error('There was a problem with the fetch operation:', error);
-            });
-
--->
