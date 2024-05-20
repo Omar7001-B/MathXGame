@@ -36,6 +36,11 @@ namespace MathXGame.Controllers
             return View(challenges);
         }
 
+        public IActionResult ErrorMessage(string msg)
+        {
+            return View("ErrorMessage", new {ErrorMessage = msg});
+        }
+
         //[HttpPost]
         public ActionResult ProcessChallengeData(Challenge data, string problemsJson)
         {
@@ -50,7 +55,10 @@ namespace MathXGame.Controllers
                 _context.SaveChanges();
                 data.Problems = JsonConvert.DeserializeObject<List<Problem>>(problemsJson);
 
-                for(int i = 0; i < data.Problems.Count; i++)
+                if (data.Problems == null || data.Problems.Count  == 0)
+                    return RedirectToAction("ErrorMessage", new { msg = "No problems found in the challenge" });
+
+                for (int i = 0; i < data.Problems.Count; i++)
                 {
                     data.Problems[i].ChallengeId = data.ChallengeId;
                     data.Problems[i].UserId = data.UserId;
