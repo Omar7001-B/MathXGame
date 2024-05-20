@@ -65,6 +65,7 @@ namespace MathXGame.Controllers
                 // load the problems 
                 var challenge = _context.Challenges.Find(data.ChallengeId);
                 data.Problems = JsonConvert.DeserializeObject<List<Problem>>(problemsJson);
+                if (data.Problems != null)
                 foreach (var problem in data.Problems)
                 {
                     var dbProblem = _context.Problems.Find(problem.ProblemId);
@@ -77,13 +78,14 @@ namespace MathXGame.Controllers
                 _context.SaveChanges();
 
                 challenge.Speed = Math.Round(_context.Problems.Where(p => p.ChallengeId == data.ChallengeId).Average(p => p.TimeTaken), 2);
-                challenge.Accuracy = _context.Problems.Where(p => p.ChallengeId == data.ChallengeId && p.IsSolved).Count() / _context.Problems.Where(p => p.ChallengeId == data.ChallengeId).Count();
                 challenge.SolvedProblems = _context.Problems.Where(p => p.ChallengeId == data.ChallengeId && p.IsSolved).Count();
                 challenge.Misses = _context.Problems.Where(p => p.ChallengeId == data.ChallengeId && !p.IsSolved).Count();
+                challenge.Accuracy = Math.Round((double)challenge.SolvedProblems / (challenge.SolvedProblems + challenge.Misses) * 100, 2);
 
                 _context.Challenges.Update(challenge);
                 _context.SaveChanges();
             }
+
             return RedirectToAction("ViewChallenge", new { id = data.ChallengeId });
         }
 
@@ -145,6 +147,18 @@ namespace MathXGame.Controllers
             message += $"Operations: {(configuration.Addition ? "Addition" : "")}{(configuration.Subtraction ? ", Subtraction" : "")}{(configuration.Multiplication ? ", Multiplication" : "")}{(configuration.Division ? ", Division" : "")}, ";
             message += $"Number of Questions: {configuration.TotalProblems}";
 
+
+            return View(configuration);
+        }
+
+        [HttpPost]
+        public IActionResult MultipleChoiceChallenge(Challenge configuration)
+        {
+            string message = $"Starting Multiple Choice ChallengeSelectItem with the following settings: ";
+            message += $"Number Range: {configuration.MinNumber}-{configuration.MaxNumber}, ";
+            message += $"Timer (Seconds): {configuration.TimerInSeconds}, ";
+            message += $"Operations: {(configuration.Addition ? "Addition" : "")}{(configuration.Subtraction ? ", Subtraction" : "")}{(configuration.Multiplication ? ", Multiplication" : "")}{(configuration.Division ? ", Division" : "")}, ";
+            message += $"Number of Questions: {configuration.TotalProblems}";
 
             return View(configuration);
         }
