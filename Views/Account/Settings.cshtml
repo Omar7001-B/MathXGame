@@ -1,0 +1,225 @@
+﻿@model MathXGame.Models.User
+
+<style>
+body {
+    font-family: Arial, sans-serif; /* Updated font-family */
+    background-color: #f7f9fc;
+    color: #333;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+h2 {
+    text-align: center;
+    color: #4a90e2;
+}
+
+form {
+    background: #ffffff;
+    border: 1px solid #e3e3e3;
+    border-radius: 8px;
+    padding: 20px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    max-width: 400px;
+    width: 100%;
+}
+
+.form-group {
+    margin-bottom: 15px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 5px;
+    color: #555;
+}
+
+.form-group input {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    transition: border-color 0.3s;
+}
+
+.form-group input:focus {
+    border-color: #4a90e2;
+    outline: none;
+    background-color: #e7f1ff;
+}
+
+.text-danger {
+    color: #e74c3c;
+    font-size: 0.9em;
+    margin-top: 5px;
+    display: block;
+}
+
+button.btn {
+    width: 100%;
+    padding: 10px;
+    border: none;
+    border-radius: 4px;
+    background-color: #007bff; /* Updated background-color */
+    color: white;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    margin-top: 10px; /* Added margin-top */
+}
+
+button.btn:hover {
+    background-color: #0056b3; /* Darker shade on hover */
+}
+
+#statusImage {
+    display: block;
+    margin: 20px auto;
+    max-width: 50px;
+}
+
+</style>
+
+@{
+    ViewData["Title"] = "Edit Account";
+}
+
+<form id="editAccountForm" onsubmit="return validateForm(event)">
+    <h2>Edit Account</h2>
+    <div class="form-group">
+        <label asp-for="Username"></label>
+        <input asp-for="Username" id="username" class="form-control" onfocus="onFocusFunction(this)" onblur="onBlurFunction(this)" />
+        <span id="usernameError" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="Password"></label>
+        <input asp-for="Password" id="password" type="password" class="form-control" onfocus="onFocusFunction(this)" onblur="onBlurFunction(this)" />
+        <span id="passwordError" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="Email"></label>
+        <input asp-for="Email" id="email" class="form-control" onfocus="onFocusFunction(this)" onblur="onBlurFunction(this)" />
+        <span id="emailError" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="FirstName"></label>
+        <input asp-for="FirstName" id="firstName" class="form-control" onfocus="onFocusFunction(this)" onblur="onBlurFunction(this)" />
+        <span id="firstNameError" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="LastName"></label>
+        <input asp-for="LastName" id="lastName" class="form-control" onfocus="onFocusFunction(this)" onblur="onBlurFunction(this)" />
+        <span id="lastNameError" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="DateOfBirth"></label>
+        <input asp-for="DateOfBirth" id="dateOfBirth" type="date" class="form-control" onfocus="onFocusFunction(this)" onblur="onBlurFunction(this)" />
+        <span id="dateOfBirthError" class="text-danger"></span>
+    </div>
+    <button type="submit" class="btn btn-primary">Save</button>
+    <button type="button" class="btn btn-primary" onclick="goBack(event) return false;">Back</button>
+    <img id="statusImage" src="~/images/placeholder.png" alt="Status Image" style="display:none;" />
+</form>
+
+@section Scripts {
+    <script>
+        'use strict';
+
+        function goBack(event) {
+            window.history.back();
+        }
+
+        function validateForm(event) {
+            event.preventDefault();
+            let isValid = true;
+
+            const username = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
+            const email = document.getElementById('email').value;
+            const firstName = document.getElementById('firstName').value;
+            const lastName = document.getElementById('lastName').value;
+            const dateOfBirth = document.getElementById('dateOfBirth').value;
+
+            // Username validation
+            if (username.length < 5) {
+                document.getElementById('usernameError').innerText = 'Username must be at least 5 characters long.';
+                isValid = false;
+            } else {
+                document.getElementById('usernameError').innerText = '';
+            }
+
+            // Password validation
+            if (password.length < 8) {
+                document.getElementById('passwordError').innerText = 'Password must be at least 8 characters long.';
+                isValid = false;
+            } else {
+                document.getElementById('passwordError').innerText = '';
+            }
+
+            // Email validation using RegEx
+            const emailRegex = /^[^\s@@]+@@[^\s@@]+\.[^\s@@]+$/;
+            if (!emailRegex.test(email)) {
+                document.getElementById('emailError').innerText = 'Invalid email address.';
+                isValid = false;
+            } else {
+                document.getElementById('emailError').innerText = '';
+            }
+
+            // Date of birth validation
+            if (isNaN(Date.parse(dateOfBirth))) {
+                document.getElementById('dateOfBirthError').innerText = 'Invalid date of birth.';
+                isValid = false;
+            } else {
+                document.getElementById('dateOfBirthError').innerText = '';
+            }
+
+            if (isValid) {
+                // Simulate form submission success
+                document.getElementById('statusImage').style.display = 'block';
+                document.getElementById('statusImage').src = '@Url.Content("~/images/success.png")';
+                setTimeout(() => {
+                    document.getElementById('editAccountForm').submit();
+                }, 2000);
+            } else {
+                document.getElementById('statusImage').style.display = 'block';
+                document.getElementById('statusImage').src = '@Url.Content("~/images/error.png")';
+                setTimeout(() => {
+                    document.getElementById('statusImage').style.display = 'none';
+                }, 2000);
+            }
+        }
+
+        function onFocusFunction(element) {
+            element.style.backgroundColor = 'lightyellow';
+        }
+
+        function onBlurFunction(element) {
+            element.style.backgroundColor = '';
+        }
+
+        document.getElementById('username').addEventListener('input', function () {
+            const username = this.value;
+            const charAtExample = username.charAt(0);
+            console.log('First character of username:', charAtExample);
+        });
+
+        document.getElementById('email').addEventListener('change', function () {
+            const email = this.value;
+            const domain = email.substring(email.indexOf('@@') + 1);
+            console.log('Email domain:', domain);
+        });
+
+        // Example of setInterval and setTimeout
+        setInterval(() => {
+            console.log('Interval message every 5 seconds');
+        }, 5000);
+
+        setTimeout(() => {
+            console.log('Timeout message after 10 seconds');
+        }, 10000);
+    </script>
+}
