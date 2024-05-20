@@ -77,5 +77,29 @@ namespace MathXGame.Controllers
             // Redirect to the login page
             return RedirectToAction("Login");
         }
+
+
+        // Handle form submission
+        [HttpPost]
+        public IActionResult Settings(User model)
+        {
+            _context.Users.Update(model);
+            _context.SaveChanges();
+            return View(model);
+        }
+
+         // Display the edit form
+        [HttpGet]
+        public IActionResult Settings()
+        {
+            var model = _context.Users.Find(HttpContext.Session.GetInt32("UserId"));
+            return View(model);
+        }
+
+        public IActionResult Privacy()
+        {
+            return View();
+        }
+
     }
 }
