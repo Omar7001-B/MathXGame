@@ -1,0 +1,92 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Error Page</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+        }
+        .container {
+            max-width: 800px; /* Increased container width */
+            margin: 50px auto; /* Adjusted margin */
+            padding: 40px; /* Increased padding */
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            color: #d9534f;
+        }
+        p {
+            color: #333;
+        }
+        .image-container {
+            display: flex;
+            justify-content: center;
+            margin-top: 30px;
+        }
+		.image-container img {
+				max-width: 250px; /* Maximum width for each image */
+				height: auto;
+				margin: 0 10px;
+				transition: transform 0.2s ease;
+		}
+        .image-container img:hover {
+            transform: scale(1.1);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Error</h1>
+        @if (!string.IsNullOrEmpty(Model.ErrorMessage))
+        {
+            <p class="error-message">@Model.ErrorMessage</p>
+        }
+        <div class="image-container">
+            <img src="/Images/Math/MathBoard.jpg" alt="MathBoard.jpg" onmouseover="startSwitching(this)" onmouseleave="stopSwitching()">
+            <img src="/Images/Math/MathDrawing.jpg" alt="MathDrawing.jpg" onmouseover="startSwitching(this)" onmouseleave="stopSwitching()">
+            <img src="/Images/Math/MathMind.jpg" alt="MathMind.jpg" onmouseover="startSwitching(this)" onmouseleave="stopSwitching()">
+        </div>
+    </div>
+    <script>
+        const imageNames = [
+            'MathBoard.jpg',
+            'MathBoard2.jpg',
+            'MathDrawing.jpg',
+            'MathLogos.jpg',
+            'MathMind.jpg',
+            'MathOperation1.jpg',
+            'MathOperation3.jpg',
+            'MathSymbols.jpg',
+            'MathSymbols2.jpg',
+            'MathPhone.jpg',
+            'MathStrange.jpg',
+            'MathHeavy.jpg',
+            'MathComplex.jpg'
+        ];
+
+        let intervalId;
+        function switchImage(image) {
+            const path = '/Images/Math/';
+            const imageName = imageNames[Math.floor(Math.random() * imageNames.length)]; 
+            image.src = path + imageName;
+        }
+
+        function startSwitching(image) {
+            clearInterval(intervalId); 
+            intervalId = setInterval(() => switchImage(image), 200); 
+        }
+
+        function stopSwitching() {
+            clearInterval(intervalId);
+        }
+    </script>
+</body>
+</html>
