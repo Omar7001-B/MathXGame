@@ -101,16 +101,17 @@
             <p><strong>⏱️ Timer:</strong> @Model.TimerInSeconds seconds</p>
             <p><strong>📐 Range of Numbers:</strong> @Model.MinNumber - @Model.MaxNumber</p>
             <p><strong>⚡ Operations:</strong>
-                @if (Model.Addition) { <span>➕ Addition</span> }
-                @if (Model.Subtraction) { <span>➖ Subtraction</span> }
-                @if (Model.Multiplication) { <span>✖️ Multiplication</span> }
-                @if (Model.Division) { <span>➗ Division</span> }
+                @if (Model.Addition) { <span>➕</span> }
+                @if (Model.Subtraction) { <span>➖</span> }
+                @if (Model.Multiplication) { <span>✖️</span> }
+                @if (Model.Division) { <span>➗</span> }
             </p>
             <div></div>
         </div>
 
         <div class="section">
             <div class="section-title">🏆 Results</div>
+            <p><strong>⭐ Challenge Score:</strong> @Model.Score</p>
             <p><strong>✅ Solved Problems:</strong> @Model.SolvedProblems</p>
             <p><strong>❌ Misses:</strong> @Model.Misses</p>
             <p><strong>🚀 Speed:</strong> @Model.Speed SPP</p>
@@ -155,6 +156,7 @@
         <div class="section review-buttons">
             <form asp-controller="Challenges" asp-action="ReviewChallenge" method="post" onsubmit="validateReview(this)">
                 <input type="hidden" name="challengeId" value="@Model.ChallengeId" />
+                <button type="submit" name="reviewType" value="All">Review All</button>
                 <button type="submit" name="reviewType" value="Incorrect">Review Incorrect</button>
                 <button type="submit" name="reviewType" value="Slow">Review Slow</button>
                 <button type="submit" name="reviewType" value="Both">Review Both</button>
@@ -177,7 +179,7 @@
             } else if (reviewType === "Slow") {
                 hasProblems = document.querySelectorAll(".slow, .both").length > 0;
             } else if (reviewType === "Both") {
-                hasProblems = document.querySelectorAll(".both").length > 0;
+                hasProblems = document.querySelectorAll(".both, .slow, .incorrect").length > 0;
             }
 
             if (!hasProblems) {
