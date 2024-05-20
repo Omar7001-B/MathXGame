@@ -21,7 +21,7 @@ class Challenge {
         this.solvedProblems = 0;
         this.misses = 0;
         this.speed = 0;
-        this.accuracy = 100;
+        this.accuracy = 0;
         this.startTime = new Date();
         this.finishTime = null;
         this.totalProblems = ((this.isReviewSession) ? data.problems.length : this.totalProblems);
@@ -72,9 +72,12 @@ class Challenge {
     updateStats() {
         const totalProblemsAttempted = this.solvedProblems + this.misses;
         const elapsedTime = (new Date() - this.startTime) / 1000;
-        this.speed = (elapsedTime / totalProblemsAttempted).toFixed(2);
-        this.accuracy = ((this.solvedProblems / totalProblemsAttempted) * 100).toFixed(2);
         this.finishTime = new Date();
+        if (totalProblemsAttempted != 0) {
+            this.speed = (elapsedTime / totalProblemsAttempted).toFixed(2);
+            this.accuracy = ((this.solvedProblems / totalProblemsAttempted) * 100).toFixed(2);
+        }
+
 
         UI.updateStats(this.solvedProblems, this.misses, this.unattemptedProblems.length, this.speed, this.accuracy);
     }
@@ -91,6 +94,10 @@ class Challenge {
     sendStatsToServer() {
         this.finishTime = new Date().toISOString();
         this.startTime = this.startTime.toISOString();
+        debugger;
+
+        if (isNaN(this.speed)) this.speed = 0;
+        if (isNaN(this.accuracy)) this.accuracy = 0;
 
         const form = document.createElement('form');
         form.method = 'post';
@@ -136,8 +143,8 @@ class UI {
         this.solvedProblemsElement.textContent = solvedProblems;
         this.missesElement.textContent = misses;
         this.problemsLeftElement.textContent = problemsLeft;
-        this.speedElement.textContent = isFinite(speed) ? speed : 0;
-        this.accuracyElement.textContent = isFinite(accuracy) ? accuracy : 100;
+        this.speedElement.textContent = speed;
+        this.accuracyElement.textContent = accuracy;
     }
 
     static updateProblemList(problem) {
