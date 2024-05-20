@@ -85,14 +85,14 @@
          }
       </style>
    </head>
-   <body>
-      @{
-      var duration = Model.FinishTime - Model.StartTime;
-      var speed_ppm = Model.SolvedProblems / duration.TotalMinutes;
-      speed_ppm = Math.Round(speed_ppm, 2);
-      }
-      <div class="container">
-         <div class="section">
+<body>
+    @{
+        var duration = Model.FinishTime - Model.StartTime;
+        var speed_ppm = Model.SolvedProblems / duration.TotalMinutes;
+        speed_ppm = Math.Round(speed_ppm, 2);
+    }
+    <div class="container">
+        <div class="section">
             <div class="section-title">🎯 Challenge Information</div>
             <p><strong>📌 Selected Challenge:</strong> @Model.SelectedChallenge</p>
             <p><strong>🆔 Challenge ID:</strong> @Model.ChallengeId</p>
@@ -101,15 +101,15 @@
             <p><strong>⏱️ Timer:</strong> @Model.TimerInSeconds seconds</p>
             <p><strong>📐 Range of Numbers:</strong> @Model.MinNumber - @Model.MaxNumber</p>
             <p><strong>⚡ Operations:</strong>
-               @if (Model.Addition) { <span>➕ Addition</span> }
-               @if (Model.Subtraction) { <span>➖ Subtraction</span> }
-               @if (Model.Multiplication) { <span>✖️ Multiplication</span> }
-               @if (Model.Division) { <span>➗ Division</span> }
+                @if (Model.Addition) { <span>➕ Addition</span> }
+                @if (Model.Subtraction) { <span>➖ Subtraction</span> }
+                @if (Model.Multiplication) { <span>✖️ Multiplication</span> }
+                @if (Model.Division) { <span>➗ Division</span> }
             </p>
             <div></div>
-         </div>
+        </div>
 
-         <div class="section">
+        <div class="section">
             <div class="section-title">🏆 Results</div>
             <p><strong>✅ Solved Problems:</strong> @Model.SolvedProblems</p>
             <p><strong>❌ Misses:</strong> @Model.Misses</p>
@@ -118,51 +118,79 @@
             <p><strong>🎯 Accuracy:</strong> @Model.Accuracy%</p>
             <p><strong>⏲️ Duration:</strong> @duration.TotalSeconds s</p>
             <p><strong>⏰ Start Time:</strong> @Model.StartTime</p>
-            <p><strong>⏱️ Finish Time:</strong> @Model.FinishTime</p
-                <hr />
-         </div>
+            <p><strong>⏱️ Finish Time:</strong> @Model.FinishTime</p>
+            <hr />
+        </div>
 
-         <div class="section" style="width: 100%;">
-             <hr />
+        <div class="section" style="width: 100%;">
+            <hr />
             <div>
-               <div class="section-title">📝 Problem Details</div>
-               <table>
-                  <tr>
-                     <th>🆔 Problem ID</th>
-                     <th>✏️ Expression</th>
-                     <th>✅ Right Answer</th>
-                     <th>👤 User Answer</th>
-                     <th>✔️ Is Solved</th>
-                     <th>⏱️ Time Taken (Seconds)</th>
-                  </tr>
-                  @foreach (var problem in Model.Problems)
-                  {
-                  var slow = Model.Speed < problem.TimeTaken;
-                  var incorrect = !problem.IsSolved;
-                  <tr class="@((slow && incorrect) ? "both" : (slow ? "slow" : (incorrect ? "incorrect" : "")))">
-                  <td>@problem.ProblemId</td>
-                  <td>@problem.Expression</td>
-                  <td>@problem.RightAnswer</td>
-                  <td>@problem.UserAnswer</td>
-                  <td>@(problem.IsSolved ? "✅ Yes" : "❌ No")</td>
-                  <td>@problem.TimeTaken</td>
-                  </tr>
-                  }
-               </table>
+                <div class="section-title">📝 Problem Details</div>
+                <table>
+                    <tr>
+                        <th>🆔 Problem ID</th>
+                        <th>✏️ Expression</th>
+                        <th>✅ Right Answer</th>
+                        <th>👤 User Answer</th>
+                        <th>✔️ Is Solved</th>
+                        <th>⏱️ Time Taken (Seconds)</th>
+                    </tr>
+                    @foreach (var problem in Model.Problems)
+                    {
+                        var slow = Model.Speed < problem.TimeTaken;
+                        var incorrect = !problem.IsSolved;
+                        <tr class="@((slow && incorrect) ? "both" : (slow ? "slow" : (incorrect ? "incorrect" : "")))">
+                            <td>@problem.ProblemId</td>
+                            <td>@problem.Expression</td>
+                            <td>@problem.RightAnswer</td>
+                            <td>@problem.UserAnswer</td>
+                            <td>@(problem.IsSolved ? "✅ Yes" : "❌ No")</td>
+                            <td>@problem.TimeTaken</td>
+                        </tr>
+                    }
+                </table>
             </div>
-         </div>
-         <div class="section review-buttons">
-            <form asp-controller="Challenges" asp-action="ReviewChallenge" method="post">
-               <input type="hidden" name="challengeId" value="@Model.ChallengeId" />
-               <button type="submit" name="reviewType" value="Incorrect">Review Incorrect</button>
-               <button type="submit" name="reviewType" value="Slow">Review Slow</button>
-               <button type="submit" name="reviewType" value="Both">Review Both</button>
+        </div>
+
+        <div class="section review-buttons">
+            <form asp-controller="Challenges" asp-action="ReviewChallenge" method="post" onsubmit="validateReview(this)">
+                <input type="hidden" name="challengeId" value="@Model.ChallengeId" />
+                <button type="submit" name="reviewType" value="Incorrect">Review Incorrect</button>
+                <button type="submit" name="reviewType" value="Slow">Review Slow</button>
+                <button type="submit" name="reviewType" value="Both">Review Both</button>
             </form>
-         </div>
-         <div class="footer">
+            <div id="message" style="color: red; display: none;">There are no problems to review.</div>
+        </div>
+
+        <div class="footer">
             <a asp-controller="Home" asp-action="Index">Back to Challenges</a> | <a asp-controller="Home" asp-action="Index">Home</a>
-         </div>
-      </div>
-      </div>
-   </body>
+        </div>
+    </div>
+
+    <script>
+        function validateReview() {
+            const reviewType = event.submitter.value;
+            let hasProblems = true;
+            debugger;
+			if (reviewType === "Incorrect") {
+                hasProblems = document.querySelectorAll(".incorrect, .both").length > 0;
+            } else if (reviewType === "Slow") {
+                hasProblems = document.querySelectorAll(".slow, .both").length > 0;
+            } else if (reviewType === "Both") {
+                hasProblems = document.querySelectorAll(".both").length > 0;
+            }
+
+            if (!hasProblems) {
+                const message = document.getElementById("message");
+                message.style.display = "block";
+                setTimeout(() => { message.style.display = "none"; }, 5000);
+                event.preventDefault();
+            }
+            else {
+                event.target.submit();
+            }
+        }
+    </script>
+</body>
+
 </html>
