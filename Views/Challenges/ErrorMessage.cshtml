@@ -31,14 +31,33 @@
             justify-content: center;
             margin-top: 30px;
         }
-		.image-container img {
-				max-width: 250px; /* Maximum width for each image */
-				height: auto;
-				margin: 0 10px;
-				transition: transform 0.2s ease;
-		}
+        .image-container img {
+            max-width: 250px; /* Maximum width for each image */
+            height: auto;
+            margin: 0 10px;
+            transition: transform 0.2s ease;
+        }
         .image-container img:hover {
             transform: scale(1.1);
+        }
+        .button-container {
+            margin-top: 20px;
+        }
+        .button-container a {
+            padding: 10px 20px;
+            margin: 10px;
+            font-size: 16px;
+            cursor: pointer;
+            border: none;
+            border-radius: 5px;
+            background-color: #007bff;
+            color: white;
+            text-decoration: none;
+            display: inline-block;
+            transition: background-color 0.3s;
+        }
+        .button-container a:hover {
+            background-color: #0056b3;
         }
     </style>
 </head>
@@ -53,6 +72,10 @@
             <img src="/Images/Math/MathBoard.jpg" alt="MathBoard.jpg" onmouseover="startSwitching(this)" onmouseleave="stopSwitching()">
             <img src="/Images/Math/MathDrawing.jpg" alt="MathDrawing.jpg" onmouseover="startSwitching(this)" onmouseleave="stopSwitching()">
             <img src="/Images/Math/MathMind.jpg" alt="MathMind.jpg" onmouseover="startSwitching(this)" onmouseleave="stopSwitching()">
+        </div>
+        <div class="button-container">
+            <a href="@Url.Action("Index", "Home")">Home Page</a>
+            <a href="@Url.Action("Index", "Challenges")">Back to Challenges</a>
         </div>
     </div>
     <script>
@@ -75,18 +98,24 @@
         let intervalId;
         function switchImage(image) {
             const path = '/Images/Math/';
-            const imageName = imageNames[Math.floor(Math.random() * imageNames.length)]; 
+            const imageName = imageNames[Math.floor(Math.random() * imageNames.length)];
             image.src = path + imageName;
         }
 
         function startSwitching(image) {
-            clearInterval(intervalId); 
-            intervalId = setInterval(() => switchImage(image), 200); 
+            clearInterval(intervalId);
+            intervalId = setInterval(() => switchImage(image), 200);
         }
 
         function stopSwitching() {
             clearInterval(intervalId);
         }
+
+        // Prevent back button
+        history.pushState(null, null, location.href);
+        window.onpopstate = function () {
+            history.go(1);
+        };
     </script>
 </body>
 </html>
