@@ -1,0 +1,160 @@
+﻿body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: #f9f9f9;
+}
+
+.container {
+  width: 80%;
+  margin: 0 auto;
+}
+
+h1 {
+  color: #333;
+  margin-top: 20px;
+}
+
+.top-bar,
+.bottom-bar {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  margin: 10px 0;
+}
+
+.box {
+  background-color: #fff;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  padding: 20px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.main-content {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  margin: 20px 0;
+}
+
+.left-card {
+  width: 70%;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.problem-container {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  margin-bottom: 20px;
+}
+
+.problem {
+  margin-top: 20px;
+  font-size: 2em;
+  color: #333;
+}
+
+#choices {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin-top: 20px;
+}
+
+.choice-button {
+  padding: 15px 25px;
+  margin: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  background-color: #f1f1f1;
+  font-size: 1.5em;
+  color: #333;
+  cursor: pointer;
+  transition: background-color 0.3s ease, border-color 0.3s ease;
+}
+
+.choice-button:hover {
+  background-color: #e0e0e0;
+}
+
+.choice-button:active {
+  background-color: #d0d0d0;
+  border-color: #999;
+}
+
+#feedback {
+  margin-top: 10px;
+  text-align: center;
+  color: #d9534f; /* Bootstrap danger color */
+}
+
+.right-table {
+  width: 25%;
+}
+
+.right-table table {
+  width: 100%;
+  border-collapse: collapse;
+  background-color: #fff;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.right-table th,
+.right-table td {
+  border: 1px solid #ccc;
+  padding: 10px;
+  text-align: left;
+}
+
+.right-table th {
+  background-color: #f1f1f1;
+  color: #333;
+}
+
+.right-table tbody tr {
+  height: 3em;
+}
+
+.stats {
+  display: flex;
+  justify-content: space-around;
+  width: 100%;
+}
+
+.circle {
+  display: inline-block;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  margin: 5px;
+}
+
+.circle.green {
+  background-color: green;
+}
+
+.circle.red {
+  background-color: red;
+}
+
+.time-taken {
+  text-align: center;
+  font-size: 12px;
+  color: #555;
+}
+
+.circle-container {
+  display: inline-block;
+  margin: 5px;
+  text-align: center;
+}

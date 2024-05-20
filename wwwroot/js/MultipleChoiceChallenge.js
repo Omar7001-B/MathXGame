@@ -105,6 +105,10 @@ class Challenge {
         this.finishTime = new Date().toISOString();
         this.startTime = this.startTime.toISOString();
 
+        if (isNaN(this.speed)) this.speed = 0;
+        if (isNaN(this.accuracy)) this.accuracy = 0;
+
+
         const form = document.createElement('form');
         form.method = 'post';
         form.action = '/Challenges/ProcessChallengeData';
