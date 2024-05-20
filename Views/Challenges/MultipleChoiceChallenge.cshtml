@@ -1,0 +1,77 @@
+﻿
+@{
+    ViewData["Title"] = "MultipleChoiceChallenge";
+}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@Model.SelectedChallenge</title>
+    <link rel="stylesheet" href="~/css/MultipleChoiceChallenge.css"/>
+</head>
+
+<body>
+    <div class="container">
+        <h1>@Model.SelectedChallenge 🏆</h1>
+
+        <div class="top-bar">
+            <div class="stats box">
+                <div id="countdownTimer">⏳ Time Left: <span id="timer">@Model.TimerInSeconds</span></div>
+                <div>⚡ Speed: <span id="speed">0</span> seconds per problem</div>
+                <div>🎯 Accuracy: <span id="accuracy">100</span>%</div>
+            </div>
+        </div>
+
+        <div class="main-content">
+            <div class="left-card">
+                <div class="problem">📝 Problem: <span id="problem">Loading...</span></div>
+                <div id="choices" class="choices">
+                    <button class="choice-button" data-choice="1">Choice 1</button>
+                    <button class="choice-button" data-choice="2">Choice 2</button>
+                    <button class="choice-button" data-choice="3">Choice 3</button>
+                    <button class="choice-button" data-choice="4">Choice 4</button>
+                </div>
+                <div id="feedback">🔍</div>
+            </div>
+
+            <div class="right-table">
+                <table id="problemsTable">
+                    <thead>
+                        <tr>
+                            <th>📊 Expression</th>
+                            <th>✅ Right Answer</th>
+                            <th>❓ Your Answer</th>
+                        </tr>
+                    </thead>
+                    <tbody id="problems">
+                        <!-- Dynamically generated rows will go here -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <div class="bottom-bar">
+            <div class="stats box">
+                <div>🔢 Total Problems: <span id="totalProblems">0</span></div>
+                <div>📉 Problems Left: <span id="problemsLeft">0</span></div>
+                <div>✔️ Solved Problems: <span id="solvedProblems">0</span></div>
+                <div>❌ Misses: <span id="misses">0</span></div>
+            </div>
+        </div>
+        <div class="results-bar">
+            <div id="circles"></div>
+        </div>
+    </div>
+    <script>
+        const challengeData = @Html.Raw(Json.Serialize(Model));
+        console.log(challengeData);
+    </script>
+    <script src="~/js/MultipleChoiceChallenge.js"></script>
+</body>
+
+</html>
+
