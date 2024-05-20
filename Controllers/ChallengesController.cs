@@ -65,6 +65,7 @@ namespace MathXGame.Controllers
                 }
 
                 _context.Problems.AddRange(data.Problems);
+                data.CalculateStatistics();
                 _context.SaveChanges();
             }
             else
@@ -85,10 +86,7 @@ namespace MathXGame.Controllers
                 _context.Challenges.Update(challenge);
                 _context.SaveChanges();
 
-                challenge.Speed = Math.Round(_context.Problems.Where(p => p.ChallengeId == data.ChallengeId).Average(p => p.TimeTaken), 2);
-                challenge.SolvedProblems = _context.Problems.Where(p => p.ChallengeId == data.ChallengeId && p.IsSolved).Count();
-                challenge.Misses = _context.Problems.Where(p => p.ChallengeId == data.ChallengeId && !p.IsSolved).Count();
-                challenge.Accuracy = Math.Round((double)challenge.SolvedProblems / (challenge.SolvedProblems + challenge.Misses) * 100, 2);
+                challenge.CalculateStatistics();
 
                 _context.Challenges.Update(challenge);
                 _context.SaveChanges();
@@ -102,6 +100,7 @@ namespace MathXGame.Controllers
             var challenge = _context.Challenges.Find(id);
             _context.Entry(challenge).Collection(c => c.Problems).Load();
             _context.Entry(challenge).Reference(c => c.User).Load();
+            challenge.CalculateStatistics();
 
             if (challenge == null)
                 return Content("ChallengeSelectItem not found");
@@ -132,6 +131,11 @@ namespace MathXGame.Controllers
                 challenge.Problems = challenge.Problems.Where(p => p.TimeTaken > speed).ToList();
             else if(reviewType == "Both")
                 challenge.Problems = challenge.Problems.Where(p => p.UserAnswer != p.RightAnswer || p.TimeTaken > speed).ToList();
+            else if(reviewType == "All")
+                challenge.Problems = challenge.Problems.ToList();
+
+            // Shuffle the problems
+            challenge.Problems = challenge.Problems.OrderBy(p => Guid.NewGuid()).ToList();
 
             string viewName = challenge.SelectedChallenge.Replace(" ", "");
             return View(viewName, challenge);
