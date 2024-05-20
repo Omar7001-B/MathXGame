@@ -45,7 +45,10 @@ namespace MathXGame.Controllers
         public ActionResult ProcessChallengeData(Challenge data, string problemsJson)
         {
             if (data == null || string.IsNullOrEmpty(problemsJson))
-                return Content("Invalid data received");
+                return RedirectToAction("ErrorMessage", new { msg = "Invalid data received!" });
+
+            if (data.Problems == null || data.Problems.Count  == 0 || data.SolvedProblems + data.Misses == 0)
+                return RedirectToAction("ErrorMessage", new { msg = "No problems found in the challenge" });
 
             if (data.ChallengeId == 0)
             {
@@ -55,8 +58,6 @@ namespace MathXGame.Controllers
                 _context.SaveChanges();
                 data.Problems = JsonConvert.DeserializeObject<List<Problem>>(problemsJson);
 
-                if (data.Problems == null || data.Problems.Count  == 0)
-                    return RedirectToAction("ErrorMessage", new { msg = "No problems found in the challenge" });
 
                 for (int i = 0; i < data.Problems.Count; i++)
                 {
