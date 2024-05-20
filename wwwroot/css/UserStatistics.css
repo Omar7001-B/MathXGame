@@ -1,0 +1,107 @@
+﻿body {
+  font-family: sans-serif;
+  margin: 0;
+  padding: 20px;
+  background-color: #f0f2f5; /* Light gray background */
+}
+
+.container {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 2rem; /* Consistent padding for spacing */
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+  border-radius: 5px; /* Rounded corners for a softer look */
+}
+
+.heading {
+  text-align: center;
+  font-size: 2rem;
+  margin-bottom: 1rem;
+  color: #3498db; /* Primary blue color */
+}
+
+.subheading {
+  text-align: center;
+  font-size: 1.2rem;
+  color: #666; /* Lighter gray for secondary text */
+}
+
+.card {
+  background-color: #fff; /* White background for cards */
+  border-radius: 5px;
+  margin-bottom: 20px;
+  padding: 20px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+}
+
+.card-title {
+  font-size: 1.2rem;
+  font-weight: bold;
+  margin-bottom: 10px;
+  color: #3498db; /* Primary blue color */
+}
+
+.stats-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.stats-list li {
+  margin-bottom: 5px;
+  display: flex; /* Flexbox for better layout */
+  justify-content: space-between; /* Align items horizontally */
+  font-weight: lighter; /* Lighter weight for stats */
+}
+
+.stats-list li span:first-child {
+  color: #333; /* Darker gray for stat labels */
+}
+
+.history-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.history-table th,
+.history-table td {
+  padding: 10px;
+  border: 1px solid #ddd;
+  text-align: left; /* Left alignment for readability */
+}
+
+.history-table thead {
+  background-color: #eee;
+}
+
+.history-table a {
+  color: #3498db; /* Primary blue color for links */
+  text-decoration: none; /* Remove underline */
+}
+
+.history-table a:hover {
+  text-decoration: underline; /* Underline on hover for emphasis */
+}
+
+.challenge-toggle {
+  color: #3498db; /* Primary blue color */
+  text-decoration: none; /* Remove underline */
+}
+
+.challenge-toggle:hover {
+  text-decoration: underline; /* Underline on hover for emphasis */
+}
+
+.challenge-details {
+  display: none; /* Initially hidden */
+  padding: 10px;
+  border-top: 1px solid #ddd;
+}
+
+.challenge-details.hidden {
+  display: none; /* Redundant, but clarifies the hidden state */
+}
+
+.challenge-details p {
+  margin-bottom: 5px;
+}
