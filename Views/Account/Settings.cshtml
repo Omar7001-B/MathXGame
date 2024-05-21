@@ -2,7 +2,7 @@
 
 <style>
 body {
-    font-family: Arial, sans-serif; /* Updated font-family */
+    font-family: Arial, sans-serif;
     background-color: #f7f9fc;
     color: #333;
     margin: 0;
@@ -64,24 +64,23 @@ button.btn {
     padding: 10px;
     border: none;
     border-radius: 4px;
-    background-color: #007bff; /* Updated background-color */
+    background-color: #007bff;
     color: white;
     font-size: 16px;
     cursor: pointer;
     transition: background-color 0.3s;
-    margin-top: 10px; /* Added margin-top */
+    margin-top: 10px;
 }
 
 button.btn:hover {
-    background-color: #0056b3; /* Darker shade on hover */
+    background-color: #0056b3;
 }
 
 #statusImage {
     display: block;
     margin: 20px auto;
-    max-width: 50px;
+    max-width: 100%;
 }
-
 </style>
 
 @{
@@ -92,134 +91,124 @@ button.btn:hover {
     <h2>Edit Account</h2>
     <div class="form-group">
         <label asp-for="Username"></label>
-        <input asp-for="Username" id="username" class="form-control" onfocus="onFocusFunction(this)" onblur="onBlurFunction(this)" />
+        <input asp-for="Username" id="username" class="form-control" />
         <span id="usernameError" class="text-danger"></span>
     </div>
     <div class="form-group">
         <label asp-for="Password"></label>
-        <input asp-for="Password" id="password" type="password" class="form-control" onfocus="onFocusFunction(this)" onblur="onBlurFunction(this)" />
+        <input asp-for="Password" id="password" type="password" class="form-control" />
         <span id="passwordError" class="text-danger"></span>
     </div>
     <div class="form-group">
         <label asp-for="Email"></label>
-        <input asp-for="Email" id="email" class="form-control" onfocus="onFocusFunction(this)" onblur="onBlurFunction(this)" />
+        <input asp-for="Email" id="email" class="form-control" />
         <span id="emailError" class="text-danger"></span>
     </div>
     <div class="form-group">
         <label asp-for="FirstName"></label>
-        <input asp-for="FirstName" id="firstName" class="form-control" onfocus="onFocusFunction(this)" onblur="onBlurFunction(this)" />
+        <input asp-for="FirstName" id="firstName" class="form-control" />
         <span id="firstNameError" class="text-danger"></span>
     </div>
     <div class="form-group">
         <label asp-for="LastName"></label>
-        <input asp-for="LastName" id="lastName" class="form-control" onfocus="onFocusFunction(this)" onblur="onBlurFunction(this)" />
+        <input asp-for="LastName" id="lastName" class="form-control" />
         <span id="lastNameError" class="text-danger"></span>
     </div>
     <div class="form-group">
         <label asp-for="DateOfBirth"></label>
-        <input asp-for="DateOfBirth" id="dateOfBirth" type="date" class="form-control" onfocus="onFocusFunction(this)" onblur="onBlurFunction(this)" />
+        <input asp-for="DateOfBirth" id="dateOfBirth" type="date" class="form-control" />
         <span id="dateOfBirthError" class="text-danger"></span>
     </div>
     <button type="submit" class="btn btn-primary">Save</button>
-    <button type="button" class="btn btn-primary" onclick="goBack(event) return false;">Back</button>
+    <button type="button" class="btn btn-primary" onclick="goBack(event)">Back</button>
     <img id="statusImage" src="~/images/placeholder.png" alt="Status Image" style="display:none;" />
 </form>
 
-@section Scripts {
-    <script>
-        'use strict';
+<script>
+	'use strict';
 
-        function goBack(event) {
-            window.history.back();
-        }
+	function goBack(event) {
+		debugger;
+		event.preventDefault();
+		window.history.back();
+	}
 
-        function validateForm(event) {
-            event.preventDefault();
-            let isValid = true;
+	function validateForm(event) {
+		event.preventDefault();
+		let isValid = true;
 
-            const username = document.getElementById('username').value;
-            const password = document.getElementById('password').value;
-            const email = document.getElementById('email').value;
-            const firstName = document.getElementById('firstName').value;
-            const lastName = document.getElementById('lastName').value;
-            const dateOfBirth = document.getElementById('dateOfBirth').value;
+		const username = document.getElementById('username').value;
+		const password = document.getElementById('password').value;
+		const email = document.getElementById('email').value;
+		const firstName = document.getElementById('firstName').value;
+		const lastName = document.getElementById('lastName').value;
+		const dateOfBirth = document.getElementById('dateOfBirth').value;
 
-            // Username validation
-            if (username.length < 5) {
-                document.getElementById('usernameError').innerText = 'Username must be at least 5 characters long.';
-                isValid = false;
-            } else {
-                document.getElementById('usernameError').innerText = '';
-            }
+		// Username validation
+		if (username.length < 4) {
+			document.getElementById('usernameError').innerText = 'Username must be at least 4 characters long.';
+			isValid = false;
+		} else {
+			document.getElementById('usernameError').innerText = '';
+		}
 
-            // Password validation
-            if (password.length < 8) {
-                document.getElementById('passwordError').innerText = 'Password must be at least 8 characters long.';
-                isValid = false;
-            } else {
-                document.getElementById('passwordError').innerText = '';
-            }
+		// Password validation
+		if (password.length < 8) {
+			document.getElementById('passwordError').innerText = 'Password must be at least 8 characters long.';
+			isValid = false;
+		} else {
+			document.getElementById('passwordError').innerText = '';
+		}
 
-            // Email validation using RegEx
-            const emailRegex = /^[^\s@@]+@@[^\s@@]+\.[^\s@@]+$/;
-            if (!emailRegex.test(email)) {
-                document.getElementById('emailError').innerText = 'Invalid email address.';
-                isValid = false;
-            } else {
-                document.getElementById('emailError').innerText = '';
-            }
+		// Email validation using RegEx
+		const emailRegex = /^[^\s@@]+@@[^\s@@]+\.[^\s@@]+$/;
+		if (!emailRegex.test(email)) {
+			document.getElementById('emailError').innerText = 'Invalid email address.';
+			isValid = false;
+		} else {
+			document.getElementById('emailError').innerText = '';
+		}
 
-            // Date of birth validation
-            if (isNaN(Date.parse(dateOfBirth))) {
-                document.getElementById('dateOfBirthError').innerText = 'Invalid date of birth.';
-                isValid = false;
-            } else {
-                document.getElementById('dateOfBirthError').innerText = '';
-            }
+		// Date of birth validation
+		if (isNaN(Date.parse(dateOfBirth))) {
+			document.getElementById('dateOfBirthError').innerText = 'Invalid date of birth.';
+			isValid = false;
+		} else {
+			document.getElementById('dateOfBirthError').innerText = '';
+		}
 
-            if (isValid) {
-                // Simulate form submission success
-                document.getElementById('statusImage').style.display = 'block';
-                document.getElementById('statusImage').src = '@Url.Content("~/images/success.png")';
-                setTimeout(() => {
-                    document.getElementById('editAccountForm').submit();
-                }, 2000);
-            } else {
-                document.getElementById('statusImage').style.display = 'block';
-                document.getElementById('statusImage').src = '@Url.Content("~/images/error.png")';
-                setTimeout(() => {
-                    document.getElementById('statusImage').style.display = 'none';
-                }, 2000);
-            }
-        }
+		if (isValid) {
+			// Simulate form submission success
+			document.getElementById('statusImage').style.display = 'block';
+			document.getElementById('statusImage').src = 'Images/Account/Success.gif';
+			setTimeout(() => {
+				document.getElementById('editAccountForm').submit();
+			}, 2000);
+		} else {
+			document.getElementById('statusImage').style.display = 'block';
+			document.getElementById('statusImage').src = '/Images/Account/Error.gif';
+			setTimeout(() => {
+				document.getElementById('statusImage').style.display = 'none';
+			}, 2000);
+		}
+	}
 
-        function onFocusFunction(element) {
-            element.style.backgroundColor = 'lightyellow';
-        }
+	document.getElementById('username').addEventListener('input', function () {
+		const username = this.value;
+		console.log('First character of username:', username.charAt(0));
+	});
 
-        function onBlurFunction(element) {
-            element.style.backgroundColor = '';
-        }
+	document.getElementById('email').addEventListener('change', function () {
+		const email = this.value;
+		const domain = email.substring(email.indexOf('@@') + 1);
+		console.log('Email domain:', domain);
+	});
 
-        document.getElementById('username').addEventListener('input', function () {
-            const username = this.value;
-            const charAtExample = username.charAt(0);
-            console.log('First character of username:', charAtExample);
-        });
+	setInterval(() => {
+		console.log('Interval message every 5 seconds');
+	}, 5000);
 
-        document.getElementById('email').addEventListener('change', function () {
-            const email = this.value;
-            const domain = email.substring(email.indexOf('@@') + 1);
-            console.log('Email domain:', domain);
-        });
-
-        // Example of setInterval and setTimeout
-        setInterval(() => {
-            console.log('Interval message every 5 seconds');
-        }, 5000);
-
-        setTimeout(() => {
-            console.log('Timeout message after 10 seconds');
-        }, 10000);
-    </script>
-}
+	setTimeout(() => {
+		console.log('Timeout message after 10 seconds');
+	}, 10000);
+</script>
