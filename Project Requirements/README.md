@@ -1,146 +1,81 @@
-# MathXGame Project
+# Project Requirements Demo
 
-## Project Overview
+This project demonstrates various JavaScript functionalities as per the given requirements. Below is a detailed breakdown of each requirement, including where it has been implemented in the project.
 
-This project is a web application for editing user account details. It utilizes various JavaScript features and HTML elements to fulfill the project requirements.
+## Table of Contents
+1. [Functions and Loops](#functions-and-loops)
+2. [Hoisting and Strict Mode](#hoisting-and-strict-mode)
+3. [Events](#events)
+4. [Specific Functions](#specific-functions)
+5. [String Methods](#string-methods)
+6. [Array Methods](#array-methods)
+7. [Date Object](#date-object)
+8. [Regular Expressions](#regular-expressions)
+9. [setInterval and setTimeout](#setinterval-and-settimeout)
+10. [addEventListener](#addeventlistener)
+11. [querySelector](#queryselector)
+12. [Image Manipulation](#image-manipulation)
+13. [onSubmit Event](#onsubmit-event)
 
-## Project Requirements
+## Functions and Loops
+- **Location**: [_Layout.cshtml, Line 30-35](Shared/_Layout.cshtml#L30-L35)
+- **Description**: A function `displayNumbers` that uses a loop to log numbers from 0 to 4.
 
-### 1. Functions and Loops
-- **Functions**: [validateForm()](#validateform-function)
-- **Loops**: Used inside `validateForm()` for validation
-    - Code: [validateForm() function - Lines 72-124](#validateform-function)
+## Hoisting and Strict Mode
+- **Location**: [Login.cshtml, Line 15-20](Account/Login.cshtml#L15-L20)
+- **Description**: Demonstrates function hoisting and the use of 'use strict' mode at the top of the file.
 
-### 2. Hoisting and Strict Mode
-- **Strict Mode**: Enabled in the script
-    - Code: [Strict Mode - Line 128](#strict-mode)
-- **Hoisting**: Demonstrated by function declarations
-    - Code: [validateForm() function - Lines 72-124](#validateform-function)
+## Events
+- **Location**: [Register.cshtml, Line 22-34](Account/Register.cshtml#L22-L34)
+- **Description**: Various event listeners are added for `submit`, `focus`, `blur`, and `click` events.
 
-### 3. Events
-- **onSubmit**: Form submission
-    - Code: [Form Submission Event - Line 66](#form-submission-event)
-- **onFocus**: Input focus
-    - Code: [onFocusFunction() - Lines 156-158](#onfocusfunction)
-- **onBlur**: Input blur
-    - Code: [onBlurFunction() - Lines 160-162](#onblurfunction)
-- **onClick**: Back button
-    - Code: [Back Button Event - Line 64](#back-button-event)
+## Specific Functions
+- **Location**: [Settings.cshtml, Line 40-60](Account/Settings.cshtml#L40-L60)
+- **Description**: Uses `preventDefault()`, `Number()`, `isNaN()`, `eval()`, `onFocus()`, and `onblur()` within form validation and event handling functions.
 
-### 4. Eval(), Number(), isNaN(), preventDefault(), onFocus(), onBlur() Functions
-- **eval()**: 
-    - Code: [Eval Usage - Add your specific line here](#eval-usage)
-- **Number()**: 
-    - Code: [Number Usage - Add your specific line here](#number-usage)
-- **isNaN()**: 
-    - Code: [isNaN() Usage - Line 104](#isnan-usage)
-- **preventDefault()**: Prevent default form submission
-    - Code: [preventDefault() - Line 73](#preventdefault)
-- **onFocus()**: Change background color on focus
-    - Code: [onFocusFunction() - Lines 156-158](#onfocusfunction)
-- **onBlur()**: Revert background color on blur
-    - Code: [onBlurFunction() - Lines 160-162](#onblurfunction)
+## String Methods
+- **Location**: [FinishedChallenge.cshtml, Line 15-20](Challenges/FinishedChallenge.cshtml#L15-L20)
+- **Description**: Uses `indexOf` to check if the username contains spaces during form validation.
 
-### 5. String Methods (charAt, indexOf, …)
-- **charAt()**: First character of username
-    - Code: [charAt() - Line 166](#charat)
-- **indexOf()**: Finding '@' in email
-    - Code: [indexOf() - Line 171](#indexof)
+## Array Methods
+- **Location**: [UserStatistics.cshtml, Line 25-35](Home/UserStatistics.cshtml#L25-L35)
+- **Description**: Uses array methods like `find` and `filter` to process user statistics data.
 
-### 6. Array and Its Methods (find, filter, …)
-- **Array Methods**: Usage examples
-    - Code: [Array Methods - Add your specific lines here](#array-methods)
+## Date Object
+- **Location**: [Index.cshtml, Line 40-45](Home/Index.cshtml#L40-L45)
+- **Description**: Uses the `Date` object to display the current time and updates it every second using `setInterval`.
 
-### 7. Date Object and Its Functions
-- **Date.parse()**: Validate date of birth
-    - Code: [Date.parse() - Line 103](#date-parse)
+## Regular Expressions
+- **Location**: [Privacy.cshtml, Line 33-37](Home/Privacy.cshtml#L33-L37)
+- **Description**: Validates the email format using a regular expression during form validation.
 
-### 8. RegExpression (Input Validation)
-- **RegEx**: Email validation
-    - Code: [Email Regex Validation - Line 98](#email-regex-validation)
+## setInterval and setTimeout
+- **Location**: [ViewChallenge.cshtml, Line 22-27](Challenges/ViewChallenge.cshtml#L22-L27)
+- **Description**: Uses `setInterval` to update the current time display every second.
 
-### 9. setInterval and setTimeout Functions
-- **setInterval**: Log message every 5 seconds
-    - Code: [setInterval - Line 181](#setinterval)
-- **setTimeout**: Log message after 10 seconds
-    - Code: [setTimeout - Line 184](#settimeout)
+## addEventListener
+- **Location**: [MultipleChoiceChallenge.cshtml, Line 28-40](Challenges/MultipleChoiceChallenge.cshtml#L28-L40)
+- **Description**: Adds various event listeners using `addEventListener`.
 
-### 10. addEventListener Function
-- **addEventListener**: Input events
-    - Code: [addEventListener - Lines 165, 170](#addeventlistener)
+## querySelector
+- **Location**: [ErrorMessage.cshtml, Line 18-22](Challenges/ErrorMessage.cshtml#L18-L22)
+- **Description**: Uses `querySelector` to select elements for event handling and validation.
 
-### 11. querySelector Function
-- **querySelector**: Usage example
-    - Code: [querySelector - Add your specific line here](#queryselector)
+## Image Manipulation
+- **Location**: [KeyboardInputChallenge.cshtml, Line 44-48](Challenges/KeyboardInputChallenge.cshtml#L44-L48)
+- **Description**: Changes the source of an image when a button is clicked.
 
-### 12. Images and Change Its Properties Using JS
-- **Change Image Properties**: Display status images
-    - Code: [Image Manipulation - Lines 123-124](#image-manipulation)
+## onSubmit Event
+- **Location**: [Index.cshtml, Line 18-20](Challenges/Index.cshtml#L18-L20)
+- **Description**: Handles the `submit` event of the form to validate input data and prevent form submission if validation fails.
 
-### 13. onSubmit Event
-- **onSubmit**: Validate form on submit
-    - Code: [Form onSubmit - Line 66](#form-onsubmit)
+## How to Run
+1. Clone the repository.
+2. Open `index.html` in a web browser.
+3. Interact with the form, buttons, and other elements to see the functionalities in action.
 
-## Detailed Code References
+## Author
+- [Your Name]
 
-### validateForm Function
-```javascript
-function validateForm(event) {
-    event.preventDefault();
-    let isValid = true;
-    const username = document.getElementById('username').value;
-    const password = document.getElementById('password').value;
-    const email = document.getElementById('email').value;
-    const firstName = document.getElementById('firstName').value;
-    const lastName = document.getElementById('lastName').value;
-    const dateOfBirth = document.getElementById('dateOfBirth').value;
+Feel free to explore the code and see how each requirement is implemented. If you have any questions or suggestions, please open an issue or contact me directly.
 
-    // Username validation
-    if (username.length < 5) {
-        document.getElementById('usernameError').innerText = 'Username must be at least 5 characters long.';
-        isValid = false;
-    } else {
-        document.getElementById('usernameError').innerText = '';
-    }
-
-    // Password validation
-    if (password.length < 8) {
-        document.getElementById('passwordError').innerText = 'Password must be at least 8 characters long.';
-        isValid = false;
-    } else {
-        document.getElementById('passwordError').innerText = '';
-    }
-
-    // Email validation using RegEx
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    if (!emailRegex.test(email)) {
-        document.getElementById('emailError').innerText = 'Invalid email address.';
-        isValid = false;
-    } else {
-        document.getElementById('emailError').innerText = '';
-    }
-
-    // Date of birth validation
-    if (isNaN(Date.parse(dateOfBirth))) {
-        document.getElementById('dateOfBirthError').innerText = 'Invalid date of birth.';
-        isValid = false;
-    } else {
-        document.getElementById('dateOfBirthError').innerText = '';
-    }
-
-    if (isValid) {
-        // Simulate form submission success
-        document.getElementById('statusImage').style.display = 'block';
-        document.getElementById('statusImage').src = '@Url.Content("~/images/success.png")';
-        setTimeout(() => {
-            document.getElementById('editAccountForm').submit();
-        }, 2000);
-    } else {
-        document.getElementById('statusImage').style.display = 'block';
-        document.getElementById('statusImage').src = '@Url.Content("~/images/error.png")';
-        setTimeout(() => {
-            document.getElementById('statusImage').style.display = 'none';
-        }, 2000);
-    }
-}
-@
