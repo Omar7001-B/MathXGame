@@ -47,7 +47,7 @@ namespace MathXGame.Controllers
             if (data == null || string.IsNullOrEmpty(problemsJson))
                 return RedirectToAction("ErrorMessage", new { msg = "Invalid data received!" });
 
-            if (data.Problems == null || data.Problems.Count  == 0 || data.SolvedProblems + data.Misses == 0)
+            if (data.SolvedProblems + data.Misses == 0)
                 return RedirectToAction("ErrorMessage", new { msg = "No problems found in the challenge" });
 
             if (data.ChallengeId == 0)
