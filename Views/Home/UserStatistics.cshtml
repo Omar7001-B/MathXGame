@@ -173,24 +173,31 @@
         {
             <div class="card card-body">
 			  <li>
-				<a href="@Url.Action("ViewChallenge", "Challenges", new {id  = challenge.ChallengeId})" class="challenge-title">@challenge.SelectedChallenge</a>
-
-								@{
-									var speedColor = challenge.Speed > Model.AverageSpeed ? "green" : "red";
-								}
-
-				<span style="color:@speedColor">@challenge.Speed s/problem</span>
+                <span>
+					<span style="font-size=20px" onclick="document.getElementById('@challenge.ChallengeId').classList.toggle('hidden-details')">►</span>
+					<a href="@Url.Action("ViewChallenge", "Challenges", new {id  = challenge.ChallengeId})" class="challenge-title">
+						🕒 @challenge.StartTime.ToString("HH:mm")
+                        @challenge.SelectedChallenge 
+                    </a>
+                </span>
+				@{
+					var speedColor = challenge.Speed < Model.AverageSpeed ? "green" : "red";
+                    var emoji = challenge.Speed < Model.AverageSpeed ? "⇪" : "⇘";
+				}
+				<span style="color:@speedColor">@challenge.Speed s/problem @emoji</span>
 			  </li>
-              <p>🏆 Score: @challenge.Score</p>
-              <p>✅ Problems Attempted: @challenge.SolvedProblems </p>
-              <p>🔻 Misses: @challenge.Misses</p>
-              <p>📏 Number Range: @challenge.MinNumber - @challenge.MaxNumber</p>
-              <p>🔨 Operations:
-                @(challenge.Addition ? "➕" : "")
-                @(challenge.Subtraction ? "➖" : "")
-                @(challenge.Multiplication ? "✖️" : "")
-                @(challenge.Division ? "➗" : "")
-              </p>
+              <div id="@challenge.ChallengeId" class="hidden-details">
+				  <p>🏆 Score: @challenge.Score</p>
+				  <p>✅ Problems Solved: @challenge.SolvedProblems </p>
+				  <p>🔻 Misses: @challenge.Misses</p>
+				  <p>📏 Number Range: @challenge.MinNumber - @challenge.MaxNumber</p>
+				  <p>🔨 Operations:
+					@(challenge.Addition ? "➕" : "")
+					@(challenge.Subtraction ? "➖" : "")
+					@(challenge.Multiplication ? "✖️" : "")
+					@(challenge.Division ? "➗" : "")
+				  </p>
+              </div>
             </div>
         }
       </ul>
