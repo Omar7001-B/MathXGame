@@ -22,7 +22,7 @@ This project fulfills various requirements as specified in the project guideline
 - [x] [isNaN()](/wwwroot/js/MultipleChoiceChallenge.js#L108-L109): Checks for NaN using `isNaN()`.
 
 - [x] [preventDefault()](/Views/Account/Settings.cshtml#L130-140): Prevents default behavior using `preventDefault()`.
-- [x] [preventDefault()](/Views/Challenges/ViewChallenge.cshtml#L105-193): Prevents default behavior using `preventDefault()`.
+- [x] [preventDefault()](/Views/Challenges/ViewChallenge.cshtml#L185-193): Prevents default behavior using `preventDefault()`.
 
 - [x] [onFocus() and onBlur()](/Views/Account/Register.cshtml#L83-L93): Handles focus and blur events.
 
@@ -30,8 +30,9 @@ This project fulfills various requirements as specified in the project guideline
 - [x] [String Manipulation](/Views/Account/Settings.cshtml#L196-L205): Utilizes string methods like `charAt`, `indexOf`, etc.
 
 ## 6. Array and its Methods (1 Pts)
-- [x] [Array Operations](/wwwroot/js/MultipleChoiceChallenge.js#L39-L55): Demonstrates the use of array methods like `push`, `map`, etc.
-- [x] [Array Operations](/wwwroot/js/MultipleChoiceChallenge.js#L25-L44): Demonstrates the use of array methods like `push`, `map`, etc.
+- [x] [Array Operations](/wwwroot/js/MultipleChoiceChallenge.js#L39-L55): Demonstrates the use of array methods like `push`.
+- [x] [Array Operations](/wwwroot/js/MultipleChoiceChallenge.js#L25-L44): Demonstrates the use of array methods like `map`.
+- [x] [Array Operations](/wwwroot/js/MultipleChoiceChallenge.js#L224): Demonstrates the use of array methods like `shift`.
 
 ## 7. Date Object and its Functions (1 Pts)
 - [x] [Date Manipulation](/wwwroot/js/KeyboardInputChallenge.js#L95-L96): Utilizes the Date object and its functions for date-related operations.
