@@ -7,11 +7,10 @@
 
 /* Main header */
 .main-header {
-    color: black;
-    /* padding: 20px; */
-    margin-top: 40px;
-    margin-left: 100px;
-    text-align: center;
+    color: #333;
+    margin: 40px auto;
+    margin-left: 315px;
+    text-align: left;
     font-size: 2.5em;
     font-family: 'Arial', sans-serif;
 }
@@ -22,11 +21,14 @@
     justify-content: space-evenly;
     align-items: flex-start;
     padding: 20px;
+    max-width: 1200px;
+    margin: 0 auto;
+    flex-wrap: wrap;
 }
 
 /* Container for challenges list */
 .challenges-container {
-    width: 600px;
+    width: 48%;
     max-height: 600px;
     overflow-y: auto;
     border: 1px solid #ddd;
@@ -34,6 +36,7 @@
     background-color: #fff;
     padding: 20px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    margin-bottom: 20px;
 }
 
 .challenges-header {
@@ -84,7 +87,7 @@
 
 /* Configuration section styles */
 .config-container {
-    width: 35%;
+    width: 48%;
     padding: 20px;
     border: 1px solid #ddd;
     border-radius: 10px;
@@ -177,6 +180,10 @@
     cursor: pointer;
     transition: background-color 0.3s;
     font-size: 1em;
+}
+
+.button i {
+    margin-right: 10px;
 }
 
 .button:hover {
