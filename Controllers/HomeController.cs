@@ -75,8 +75,8 @@ namespace MathXGame.Controllers
             _context.Entry(user).Collection(u => u.Challenges).Load();
             _context.Entry(user).Collection(u => u.Problems).Load();
 
-
-
+            if(user.Challenges.Count == 0)
+                return RedirectToAction("Index");
 
             UserStatisticsViewModel viewModel = new UserStatisticsViewModel
             {
