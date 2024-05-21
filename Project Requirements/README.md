@@ -18,7 +18,7 @@ This project demonstrates various JavaScript functionalities as per the given re
 13. [onSubmit Event](#onsubmit-event)
 
 ## Functions and Loops
-- **Location**: [_Layout.cshtml, Line 30-35](Shared/_Layout.cshtml#L30-L35)
+- **Location**: [_Layout.cshtml, Line 30-35](/../Views/Shared/_Layout.cshtml#L30-L35)
 - **Description**: A function `displayNumbers` that uses a loop to log numbers from 0 to 4.
 
 ## Hoisting and Strict Mode
