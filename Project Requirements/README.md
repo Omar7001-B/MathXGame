@@ -29,7 +29,7 @@ This project meets the following requirements as per the project guidelines:
   - Prevents default behavior using `preventDefault()` function.
 - [onFocus() and onBlur()](/wwwroot/js/MultipleChoiceChallenge.js#L77-L115)
   - Handles focus and blur events using `onFocus()` and `onBlur()` functions.
-- [Form Validation](/wwwroot/Views/Account/Settings.cshtml#L46-L86)
+- [Form Validation](/Views/Account/Settings.cshtml#L46-L86)
   - Validates form inputs using JavaScript functions.
 
 ## String Methods (1 Pts)
