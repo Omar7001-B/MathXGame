@@ -18,7 +18,7 @@ This project demonstrates various JavaScript functionalities as per the given re
 13. [onSubmit Event](#onsubmit-event)
 
 ## Functions and Loops
-- **Location**: [MultipleChoiceChallenge.js, Line 1-205](/blob/master/wwwroot/js/MultipleChoiceChallenge.jsL1-L205)
+- **Location**: [MultipleChoiceChallenge.js, Line 1-205](/Views/Shared/_Layout.cshtml#L30-L35)
   - **Description**: Defines functions and methods including `print`, `initializeProblems`, and `addInitialRowsToTable`.
 
 ## Hoisting and Strict Mode
