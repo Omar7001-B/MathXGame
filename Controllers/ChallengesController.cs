@@ -147,13 +147,8 @@ namespace MathXGame.Controllers
             challenge.Problems = challenge.Problems.OrderBy(p => Guid.NewGuid()).ToList();
 
             string viewName = challenge.SelectedChallenge.Replace(" ", "");
-            return View(viewName, challenge);
-        }
 
-        public ActionResult FinishedChallenge(Challenge data)
-        {
-            // Pass the data to the view
-            return View(data);
+            return View(viewName, challenge);
         }
 
 
@@ -184,5 +179,52 @@ namespace MathXGame.Controllers
             return View(configuration);
         }
 
+        [HttpPost]
+        public IActionResult MissingOperatorChallenge(Challenge configuration)
+        {
+            return RedirectToAction("ErrorMessage", new { msg = "MissingOperatorChallenge is not implemented yet!" });
+        }
+
+        [HttpPost]
+        public IActionResult WordProblemChallenge(Challenge configuration)
+        {
+            return RedirectToAction("ErrorMessage", new { msg = "WordProblemChallenge is not implemented yet!" });
+        }
+
+        [HttpPost]
+        public IActionResult MathMemoryChallenge(Challenge configuration)
+        {
+            return RedirectToAction("ErrorMessage", new { msg = "MathMemoryChallenge is not implemented yet!" });
+        }
+
+        [HttpPost]
+        public IActionResult NumberPlacementChallenge(Challenge configuration)
+        {
+            return RedirectToAction("ErrorMessage", new { msg = "NumberPlacementChallenge is not implemented yet!" });
+        }
+
+        [HttpPost]
+        public IActionResult ComparisonChallenge(Challenge configuration)
+        {
+            return RedirectToAction("ErrorMessage", new { msg = "ComparisonChallenge is not implemented yet!" });
+        }
+
+        [HttpPost]
+        public IActionResult SolveForXChallenge(Challenge configuration)
+        {
+            return RedirectToAction("ErrorMessage", new { msg = "SolveForXChallenge is not implemented yet!" });
+        }
+
+        [HttpPost]
+        public IActionResult TrueFalseChallenge(Challenge configuration)
+        {
+            return RedirectToAction("ErrorMessage", new { msg = "TrueFalseChallenge is not implemented yet!" });
+        }
+
+        [HttpPost]
+        public IActionResult NumberCombinationChallenge(Challenge configuration)
+        {
+            return RedirectToAction("ErrorMessage", new { msg = "NumberCombinationChallenge is not implemented yet!" });
+        }
     }
 }
