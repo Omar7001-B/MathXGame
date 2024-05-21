@@ -22,7 +22,7 @@ This project demonstrates various JavaScript functionalities as per the given re
   - **Description**: Defines functions and methods including `print`, `initializeProblems`, and `addInitialRowsToTable`.
 
 ## Hoisting and Strict Mode
-- **Location**: [MultipleChoiceChallenge.js, Line 1, 174](\wwwroot\js\MultipleChoiceChallenge.js#L1), [Settings.cshtml, Line 9](\Views\Account\Settings.cshtml#L9)
+- **Location**: [MultipleChoiceChallenge.js, Line 1, 174](/wwwroot/js/MultipleChoiceChallenge.js), [Settings.cshtml, Line 9](\Views\Account\Settings.cshtml#L9)
   - **Description**: Demonstrates hoisting with the `print` function and uses strict mode in various functions.
 
 ## Events
