@@ -54,6 +54,10 @@ namespace MathXGame.Controllers
             {
                 data.UserId = HttpContext.Session.GetInt32("UserId") ?? 0;
                 data.ChallengeId = 0;
+
+                data.StartTime = data.StartTime.ToLocalTime();
+                data.FinishTime = data.FinishTime.ToLocalTime();
+
                 _context.Challenges.Add(data);
                 _context.SaveChanges();
                 data.Problems = JsonConvert.DeserializeObject<List<Problem>>(problemsJson);
@@ -75,6 +79,10 @@ namespace MathXGame.Controllers
                 // load the problems 
                 var challenge = _context.Challenges.Find(data.ChallengeId);
                 data.Problems = JsonConvert.DeserializeObject<List<Problem>>(problemsJson);
+
+                data.StartTime = data.StartTime.ToLocalTime();
+                data.FinishTime = data.FinishTime.ToLocalTime();
+
                 if (data.Problems != null)
                 foreach (var problem in data.Problems)
                 {
