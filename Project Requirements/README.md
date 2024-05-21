@@ -4,7 +4,7 @@ This project fulfills various requirements as specified in the project guideline
 
 ## 1. Functions and Loops (2 Pts)
 - [x] [Functions](/wwwroot/js/KeyboardInputChallenge.js#L56-L63): Implements the `generateProblem` function generating math problems.
-- [x] [Loops](/wwwroot/js/KeyboardInputChallenge.js#L1-L13): Utilizes loops in `initializeProblems`.
+- [x] [Loops](/wwwroot/js/KeyboardInputChallenge.js#L49-L52): Utilizes loops in `initializeProblems`.
 
 ## 2. Hoisting and Strict Mode (2 Pts)
 - [x] [Hoisting and Strict Mode](/Views/Account/Register.cshtml#L107-L112): Demonstrates hoisting behavior and strict mode usage in JavaScript.
