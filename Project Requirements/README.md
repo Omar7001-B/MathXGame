@@ -1,70 +1,75 @@
-# Project Requirements Demo
+# Project Requirements
 
-This project demonstrates various JavaScript functionalities as per the given requirements. Below is a detailed breakdown of each requirement, including where it has been implemented in the project.
+This project fulfills various requirements as specified in the project guidelines:
 
-## Table of Contents
-1. [Functions and Loops](#functions-and-loops)
-2. [Hoisting and Strict Mode](#hoisting-and-strict-mode)
-3. [Events](#events)
-4. [Specific Functions](#specific-functions)
-5. [String Methods](#string-methods)
-6. [Array Methods](#array-methods)
-7. [Date Object](#date-object)
-8. [Regular Expressions](#regular-expressions)
-9. [setInterval and setTimeout](#setinterval-and-settimeout)
-10. [addEventListener](#addeventlistener)
-11. [querySelector](#queryselector)
-12. [Image Manipulation](#image-manipulation)
-13. [onSubmit Event](#onsubmit-event)
+## 1. Functions and Loops (2 Pts)
+- [Functions](/wwwroot/js/MultipleChoiceChallenge.js#L1-L13)
+  - Implements the `print` function for logging data.
+- [Loops](/wwwroot/js/KeyboardInputChallenge.js#L1-L13)
+  - Utilizes loops for iterative operations.
 
-## Functions and Loops
-- **Location**: [MultipleChoiceChallenge.js, Line 1-205](\wwwroot\js\MultipleChoiceChallenge.js#L1-L205)
-  - **Description**: Defines functions and methods including `print`, `initializeProblems`, and `addInitialRowsToTable`.
+## 2. Hoisting and Strict Mode (2 Pts)
+- [Hoisting and Strict Mode](/wwwroot/js/MultipleChoiceChallenge.js#L15-L25)
+  - Demonstrates hoisting behavior and strict mode usage in JavaScript.
 
-## Hoisting and Strict Mode
-- **Location**: [MultipleChoiceChallenge.js, Line 1, 174](\wwwroot\js\MultipleChoiceChallenge.js#L1), [Settings.cshtml, Line 9](\Views\Account\Settings.cshtml#L9)
-  - **Description**: Demonstrates hoisting with the `print` function and uses strict mode in various functions.
+## 3. Events (4 Pts)
+- [Event Listeners](/wwwroot/js/KeyboardInputChallenge.js#61-61)
+  - Adds event listeners for handling user input events.
+- [Event Handling](/wwwroot/js/MultipleChoiceChallenge.js#L77-L115)
+  - Handles events like form submission, button clicks, etc.
 
-## Events
-- **Location**: [MultipleChoiceChallenge.js, Line 238, 210, 174, 259](\wwwroot\js\MultipleChoiceChallenge.js#L238-L259)
-  - **Description**: Adds event listeners for `input`, `setInterval`, `submit`, and `setTimeout`.
+## 4. Specific Functions (6 Pts)
+- [eval()](/wwwroot/js/KeyboardInputChallenge.js#61-61)
+  - Uses `eval()` function for dynamic code execution.
+- [Number()](/wwwroot/js/MultipleChoiceChallenge.js#L47-L47)
+  - Utilizes `Number()` function for type conversion.
+- [isNaN()](/wwwroot/js/MultipleChoiceChallenge.js#L108-L109)
+  - Checks for NaN using `isNaN()` function.
+- [preventDefault()](/Views/Account/Settings.cshtml#L130-140)
+  - Prevents default behavior using `preventDefault()` function.
+- [onFocus() and onBlur()](/wwwroot/js/MultipleChoiceChallenge.js#L77-L115)
+  - Handles focus and blur events using `onFocus()` and `onBlur()` functions.
+- [Form Validation](/Views/Account/Settings.cshtml#L136-L194)
+  - Validates form inputs using JavaScript functions.
 
-## Specific Functions
-- **Location**: [MultipleChoiceChallenge.js, Line 77, 142, 174, 199, 238](\wwwroot\js\MultipleChoiceChallenge.js#L77-L199), [Settings.cshtml, Line 36](\Views\Account\Settings.cshtml#L36)
-  - **Description**: Uses functions like `eval`, `Number()`, `isNaN()`, `preventDefault()`, and defines a custom `goBack` function.
+## 5. String Methods (1 Pts)
+- [String Manipulation](/wwwroot/js/KeyboardInputChallenge.js#L38-L41)
+  - Utilizes string methods like `charAt`, `indexOf`, etc., for string manipulation.
 
-## String Methods
-- **Location**: Not explicitly used.
-  - **Description**: Ensure to implement string methods like `indexOf` in future validations.
+## 6. Array and its Methods (1 Pts)
+- [Array Operations](/wwwroot/js/MultipleChoiceChallenge.js#L39-L55)
+  - Demonstrates the use of array methods like `push`, `map`, etc.
+- [Array Operations](/wwwroot/js/MultipleChoiceChallenge.js#L25-L44)
+  - Demonstrates the use of array methods like `push`, `map`, etc.
 
-## Array Methods
-- **Location**: [MultipleChoiceChallenge.js, Line 23, 35](\wwwroot\js\MultipleChoiceChallenge.js#L23-L35)
-  - **Description**: Utilizes `Array.isArray` and `map` to handle arrays.
+## 7. Date Object and its Functions (1 Pts)
+- [Date Manipulation](/wwwroot/js/KeyboardInputChallenge.js#L95-L96)
+  - Utilizes the Date object and its functions for date-related operations.
 
-## Date Object
-- **Location**: [MultipleChoiceChallenge.js, Line 15, 86, 123](\wwwroot\js\MultipleChoiceChallenge.js#L15-L123)
-  - **Description**: Uses the `Date` object for time tracking and calculations.
+## 8. Regular Expressions (2 Pts)
+- [Input Validation](/Views/Account/Settings.cshtml#L164-L164)
+  - Validates user inputs using regular expressions.
 
-## Regular Expressions
-- **Location**: Not explicitly used.
-  - **Description**: Ensure to implement regular expressions for input validation in future implementations.
+## 9. setInterval and setTimeout Functions (2 Pts)
+- [setInterval](/wwwroot/js/KeyboardInputChallenge.js#L209-L215)
+  - Utilizes `setInterval` for the seconds count down.
+- [Timer setTimeout](/wwwroot/js/KeyboardInputChallenge.js#L247-L247)
+  - Utilizes `setTimeout` to remove message after 2 seconds.
+- [Timer setTimeout](/Views/Challenges/ViewChallenge.cshtml#L188-L188)
+  - Utilizes `setTimeout` to remove message after 2 seconds.
 
-## setInterval and setTimeout
-- **Location**: [MultipleChoiceChallenge.js, Line 212, 259](\wwwroot\js\MultipleChoiceChallenge.js#L212-L259)
-  - **Description**: Uses `setInterval` for timer updates and `setTimeout` for delayed actions.
+## 10. addEventListener Function (1 Pts)
+- [Event Binding](/wwwroot/js/KeyboardInputChallenge.js#L217-L249)
+  - Adds event listeners for improved interactivity.
 
-## addEventListener
-- **Location**: [MultipleChoiceChallenge.js, Line 238, 259](\wwwroot\js\MultipleChoiceChallenge.js#L238-L259)
-  - **Description**: Adds event listeners for various interactions.
+## 11. querySelector Function (1 Pts)
+- [DOM Selection](/Views/Challenges/ViewChallenge.cshtml#L177-L183)
+  - Utilizes `querySelector` for DOM manipulation.
 
-## querySelector
-- **Location**: Not explicitly used.
-  - **Description**: Ensure to implement `querySelector` for selecting DOM elements in future implementations.
+## 12. Image Manipulation (1 Pts)
+- [Image Handling](/Views/Challenges/ErrorMessage.cshtml#L82-L112)
+  - Implements functionality to manipulate images using JavaScript.
 
-## Image Manipulation
-- **Location**: Not explicitly used.
-  - **Description**: Ensure to implement image manipulation in future features.
-
-## onSubmit Event
-- **Location**: [MultipleChoiceChallenge.js, Line 174](\wwwroot\js\MultipleChoiceChallenge.js#L174)
-  - **Description**: Handles form submission event in `sendStatsToServer`.
+## 13. onSubmit Event (1 Pts)
+- [Form Submission](/wwwroot/js/KeyboardInputChallenge.js#L87-L114)
+  - Handles form submission events for processing data.
