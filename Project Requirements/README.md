@@ -18,64 +18,53 @@ This project demonstrates various JavaScript functionalities as per the given re
 13. [onSubmit Event](#onsubmit-event)
 
 ## Functions and Loops
-- **Location**: [_Layout.cshtml, Line 30-35](/Views/Shared/_Layout.cshtml#L30-L35)
-- **Description**: A function `displayNumbers` that uses a loop to log numbers from 0 to 4.
+- **Location**: [MultipleChoiceChallenge.js, Line 1-205](\wwwroot\js\MultipleChoiceChallenge.js#L1-L205)
+  - **Description**: Defines functions and methods including `print`, `initializeProblems`, and `addInitialRowsToTable`.
 
 ## Hoisting and Strict Mode
-- **Location**: [Login.cshtml, Line 15-20](Account/Login.cshtml#L15-L20)
-- **Description**: Demonstrates function hoisting and the use of 'use strict' mode at the top of the file.
+- **Location**: [MultipleChoiceChallenge.js, Line 1, 174](\wwwroot\js\MultipleChoiceChallenge.js#L1), [Settings.cshtml, Line 9](\Views\Account\Settings.cshtml#L9)
+  - **Description**: Demonstrates hoisting with the `print` function and uses strict mode in various functions.
 
 ## Events
-- **Location**: [Register.cshtml, Line 22-34](Account/Register.cshtml#L22-L34)
-- **Description**: Various event listeners are added for `submit`, `focus`, `blur`, and `click` events.
+- **Location**: [MultipleChoiceChallenge.js, Line 238, 210, 174, 259](\wwwroot\js\MultipleChoiceChallenge.js#L238-L259)
+  - **Description**: Adds event listeners for `input`, `setInterval`, `submit`, and `setTimeout`.
 
 ## Specific Functions
-- **Location**: [Settings.cshtml, Line 40-60](Account/Settings.cshtml#L40-L60)
-- **Description**: Uses `preventDefault()`, `Number()`, `isNaN()`, `eval()`, `onFocus()`, and `onblur()` within form validation and event handling functions.
+- **Location**: [MultipleChoiceChallenge.js, Line 77, 142, 174, 199, 238](\wwwroot\js\MultipleChoiceChallenge.js#L77-L199), [Settings.cshtml, Line 36](\Views\Account\Settings.cshtml#L36)
+  - **Description**: Uses functions like `eval`, `Number()`, `isNaN()`, `preventDefault()`, and defines a custom `goBack` function.
 
 ## String Methods
-- **Location**: [FinishedChallenge.cshtml, Line 15-20](Challenges/FinishedChallenge.cshtml#L15-L20)
-- **Description**: Uses `indexOf` to check if the username contains spaces during form validation.
+- **Location**: Not explicitly used.
+  - **Description**: Ensure to implement string methods like `indexOf` in future validations.
 
 ## Array Methods
-- **Location**: [UserStatistics.cshtml, Line 25-35](Home/UserStatistics.cshtml#L25-L35)
-- **Description**: Uses array methods like `find` and `filter` to process user statistics data.
+- **Location**: [MultipleChoiceChallenge.js, Line 23, 35](\wwwroot\js\MultipleChoiceChallenge.js#L23-L35)
+  - **Description**: Utilizes `Array.isArray` and `map` to handle arrays.
 
 ## Date Object
-- **Location**: [Index.cshtml, Line 40-45](Home/Index.cshtml#L40-L45)
-- **Description**: Uses the `Date` object to display the current time and updates it every second using `setInterval`.
+- **Location**: [MultipleChoiceChallenge.js, Line 15, 86, 123](\wwwroot\js\MultipleChoiceChallenge.js#L15-L123)
+  - **Description**: Uses the `Date` object for time tracking and calculations.
 
 ## Regular Expressions
-- **Location**: [Privacy.cshtml, Line 33-37](Home/Privacy.cshtml#L33-L37)
-- **Description**: Validates the email format using a regular expression during form validation.
+- **Location**: Not explicitly used.
+  - **Description**: Ensure to implement regular expressions for input validation in future implementations.
 
 ## setInterval and setTimeout
-- **Location**: [ViewChallenge.cshtml, Line 22-27](Challenges/ViewChallenge.cshtml#L22-L27)
-- **Description**: Uses `setInterval` to update the current time display every second.
+- **Location**: [MultipleChoiceChallenge.js, Line 212, 259](\wwwroot\js\MultipleChoiceChallenge.js#L212-L259)
+  - **Description**: Uses `setInterval` for timer updates and `setTimeout` for delayed actions.
 
 ## addEventListener
-- **Location**: [MultipleChoiceChallenge.cshtml, Line 28-40](Challenges/MultipleChoiceChallenge.cshtml#L28-L40)
-- **Description**: Adds various event listeners using `addEventListener`.
+- **Location**: [MultipleChoiceChallenge.js, Line 238, 259](\wwwroot\js\MultipleChoiceChallenge.js#L238-L259)
+  - **Description**: Adds event listeners for various interactions.
 
 ## querySelector
-- **Location**: [ErrorMessage.cshtml, Line 18-22](Challenges/ErrorMessage.cshtml#L18-L22)
-- **Description**: Uses `querySelector` to select elements for event handling and validation.
+- **Location**: Not explicitly used.
+  - **Description**: Ensure to implement `querySelector` for selecting DOM elements in future implementations.
 
 ## Image Manipulation
-- **Location**: [KeyboardInputChallenge.cshtml, Line 44-48](Challenges/KeyboardInputChallenge.cshtml#L44-L48)
-- **Description**: Changes the source of an image when a button is clicked.
+- **Location**: Not explicitly used.
+  - **Description**: Ensure to implement image manipulation in future features.
 
 ## onSubmit Event
-- **Location**: [Index.cshtml, Line 18-20](Challenges/Index.cshtml#L18-L20)
-- **Description**: Handles the `submit` event of the form to validate input data and prevent form submission if validation fails.
-
-## How to Run
-1. Clone the repository.
-2. Open `index.html` in a web browser.
-3. Interact with the form, buttons, and other elements to see the functionalities in action.
-
-## Author
-- [Your Name]
-
-Feel free to explore the code and see how each requirement is implemented. If you have any questions or suggestions, please open an issue or contact me directly.
-
+- **Location**: [MultipleChoiceChallenge.js, Line 174](\wwwroot\js\MultipleChoiceChallenge.js#L174)
+  - **Description**: Handles form submission event in `sendStatsToServer`.

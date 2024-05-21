@@ -196,6 +196,7 @@ UI.showProblem(currentProblem.expression);
 challenge.updateStats();
 
 
+addInitialRowsToTable();
 function addInitialRowsToTable() {
     for (let i = 0; i < 5; i++) {
         const row = UI.problemsTableBody.insertRow();
@@ -204,7 +205,6 @@ function addInitialRowsToTable() {
         }
     }
 }
-addInitialRowsToTable();
 
 const countdown = setInterval(() => {
     UI.timerElement.textContent = parseInt(UI.timerElement.textContent) - 1;
