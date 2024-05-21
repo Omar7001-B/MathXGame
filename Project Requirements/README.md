@@ -13,23 +13,23 @@ This project fulfills various requirements as specified in the project guideline
   - Demonstrates hoisting behavior and strict mode usage in JavaScript.
 
 ## 3. Events (4 Pts)
-- [Event Listeners](/wwwroot/js/KeyboardInputChallenge.js#L23-L39)
+- [Event Listeners](/wwwroot/js/KeyboardInputChallenge.js#61-61)
   - Adds event listeners for handling user input events.
 - [Event Handling](/wwwroot/js/MultipleChoiceChallenge.js#L77-L115)
   - Handles events like form submission, button clicks, etc.
 
 ## 4. Specific Functions (6 Pts)
-- [eval()](/wwwroot/js/MultipleChoiceChallenge.js#L46-L54)
+- [eval()](/wwwroot/js/KeyboardInputChallenge.js#61-61)
   - Uses `eval()` function for dynamic code execution.
-- [Number()](/wwwroot/js/MultipleChoiceChallenge.js#L47-L53)
+- [Number()](/wwwroot/js/MultipleChoiceChallenge.js#L47-L47)
   - Utilizes `Number()` function for type conversion.
-- [isNaN()](/wwwroot/js/MultipleChoiceChallenge.js#L48-L50)
+- [isNaN()](/wwwroot/js/MultipleChoiceChallenge.js#L108-L109)
   - Checks for NaN using `isNaN()` function.
-- [preventDefault()](/wwwroot/js/MultipleChoiceChallenge.js#L125-L135)
+- [preventDefault()](/Views/Account/Settings.cshtml#L130-140)
   - Prevents default behavior using `preventDefault()` function.
 - [onFocus() and onBlur()](/wwwroot/js/MultipleChoiceChallenge.js#L77-L115)
   - Handles focus and blur events using `onFocus()` and `onBlur()` functions.
-- [Form Validation](/Views/Account/Settings.cshtml#L46-L86)
+- [Form Validation](/Views/Account/Settings.cshtml#L136-L194)
   - Validates form inputs using JavaScript functions.
 
 ## 5. String Methods (1 Pts)
@@ -37,31 +37,37 @@ This project fulfills various requirements as specified in the project guideline
   - Utilizes string methods like `charAt`, `indexOf`, etc., for string manipulation.
 
 ## 6. Array and its Methods (1 Pts)
+- [Array Operations](/wwwroot/js/MultipleChoiceChallenge.js#L39-L55)
+  - Demonstrates the use of array methods like `push`, `map`, etc.
 - [Array Operations](/wwwroot/js/MultipleChoiceChallenge.js#L25-L44)
   - Demonstrates the use of array methods like `push`, `map`, etc.
 
 ## 7. Date Object and its Functions (1 Pts)
-- [Date Manipulation](/wwwroot/js/MultipleChoiceChallenge.js#L117-L123)
+- [Date Manipulation](/wwwroot/js/KeyboardInputChallenge.js#L95-L96)
   - Utilizes the Date object and its functions for date-related operations.
 
 ## 8. Regular Expressions (2 Pts)
-- [Input Validation](/wwwroot/js/KeyboardInputChallenge.js#L7-L15)
+- [Input Validation](/Views/Account/Settings.cshtml#L164-L164)
   - Validates user inputs using regular expressions.
 
 ## 9. setInterval and setTimeout Functions (2 Pts)
-- [Timer Functions](/wwwroot/js/KeyboardInputChallenge.js#L42-L74)
-  - Utilizes `setInterval` and `setTimeout` functions for timed operations.
+- [setInterval](/wwwroot/js/KeyboardInputChallenge.js#L209-L215)
+  - Utilizes `setInterval` for the seconds count down.
+- [Timer setTimeout](/wwwroot/js/KeyboardInputChallenge.js#L247-L247)
+  - Utilizes `setTimeout` to remove message after 2 seconds.
+- [Timer setTimeout](/Views/Challenges/ViewChallenge.cshtml#L188-L188)
+  - Utilizes `setTimeout` to remove message after 2 seconds.
 
 ## 10. addEventListener Function (1 Pts)
-- [Event Binding](/wwwroot/js/KeyboardInputChallenge.js#L25-L39)
+- [Event Binding](/wwwroot/js/KeyboardInputChallenge.js#L217-L249)
   - Adds event listeners for improved interactivity.
 
 ## 11. querySelector Function (1 Pts)
-- [DOM Selection](/wwwroot/js/KeyboardInputChallenge.js#L17-L21)
+- [DOM Selection](/Views/Challenges/ViewChallenge.cshtml#L177-L183)
   - Utilizes `querySelector` for DOM manipulation.
 
 ## 12. Image Manipulation (1 Pts)
-- [Image Handling](/wwwroot/js/MultipleChoiceChallenge.js#L137-L153)
+- [Image Handling](/Views/Challenges/ErrorMessage.cshtml#L82-L112)
   - Implements functionality to manipulate images using JavaScript.
 
 ## 13. onSubmit Event (1 Pts)
