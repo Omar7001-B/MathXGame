@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Photo Gallery</title>
+    <link rel="stylesheet" href="style/task4.css">
+
+</head>
+
+<body>
+    <div id="gallery-container">
+        <div id="gallery">
+            <img src="Images/BlackPlus.jpg" alt="Gallery Image">
+        </div>
+        <button onclick="previousImage()">Previous</button>
+        <button onclick="nextImage()">Next</button>
+        <button onclick="playGallery()">Play</button>
+        <button onclick="stopGallery()">Stop</button>
+    </div>
+
+    <script>
+        const imageNames = [
+            'BlackPlus.jpg',
+            'BluePlus.jpg',
+            'ColorfulPlus.jpg',
+            'GreenPlus.jpg',
+            'MathBoard.jpg',
+            'MathBoard2.jpg',
+            'MathComplex.jpg',
+            'MathDrawing.jpg',
+            'MathHeart.jpg',
+            'MathHeavy.jpg',
+            'MathLogos.jpg',
+            'MathMind.jpg',
+            'MathOperation1.jpg',
+            'MathOperation3.jpg',
+            'MathPhone.jpg',
+            'MathStrange.jpg',
+            'MathSymbols.jpg',
+            'MathSymbols2.jpg',
+            'WhiteOperation.jpg'
+        ];
+        let currentIndex = 0;
+        let interval = null;
+        const galleryImage = document.querySelector('#gallery img');
+
+        function showImage(index) {
+            galleryImage.src = `Images/${imageNames[index]}`;
+        }
+
+        function nextImage() {
+            currentIndex = (currentIndex + 1) % imageNames.length;
+            showImage(currentIndex);
+        }
+
+        function previousImage() {
+            currentIndex = (currentIndex - 1 + imageNames.length) % imageNames.length;
+            showImage(currentIndex);
+        }
+
+        function playGallery() {
+            if (!interval) {
+                interval = setInterval(nextImage, 500);
+            }
+        }
+
+        function stopGallery() {
+            clearInterval(interval);
+            interval = null;
+        }
+
+        document.getElementById('gallery').addEventListener('mouseover', playGallery);
+        document.getElementById('gallery').addEventListener('mouseout', stopGallery);
+    </script>
+</body>
+
+</html>

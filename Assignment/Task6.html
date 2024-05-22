@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Image Click Counter</title>
+    <link rel="stylesheet" href="style/task6.css">
+
+</head>
+
+<body>
+    <div class="image-container">
+        <img src="Images/BlackPlus.jpg" alt="BlackPlus" onclick="handleImageClick()">
+        <img src="Images/BluePlus.jpg" alt="BluePlus" onclick="handleImageClick()">
+        <img src="Images/ColorfulPlus.jpg" alt="ColorfulPlus" onclick="handleImageClick()">
+    </div>
+
+    <div class="control-panel">
+        <div>
+            <label><input type="checkbox" id="enableAlert"> Enable Alert</label>
+        </div>
+        <div>
+            <label>Set Countdown (seconds): <input type="number" id="countdownInput" value="10"></label>
+        </div>
+        <div>
+            <button onclick="startGame()">Start Game</button>
+        </div>
+        <div>
+            <label>Countdown: <span id="countdown">10</span> seconds</label>
+        </div>
+        <div>
+            <label>Click Preview: <span id="clickCount">0</span></label>
+        </div>
+    </div>
+
+    <script>
+        let counter = 0;
+        let countdown;
+        let interval = null;
+
+        function handleImageClick() {
+            if (interval) {
+                counter++;
+                document.getElementById('clickCount').textContent = counter;
+                if (document.getElementById('enableAlert').checked) {
+                    alert(`Your score is ${counter}`);
+                }
+            }
+        }
+
+        function startGame() {
+            if (interval) return;
+
+            counter = 0;
+            document.getElementById('clickCount').textContent = counter;
+            countdown = parseInt(document.getElementById('countdownInput').value);
+            document.getElementById('countdown').textContent = countdown;
+            isRunning = true;
+
+            interval = setInterval(() => {
+                countdown--;
+                document.getElementById('countdown').textContent = countdown;
+                if (countdown <= 0) {
+                    clearInterval(interval); interval = null;
+                    if (document.getElementById('enableAlert').checked) {
+                        alert(`Game Over! Your score is ${counter}`);
+                    }
+                }
+            }, 1000);
+        }
+    </script>
+</body>
+
+</html>
