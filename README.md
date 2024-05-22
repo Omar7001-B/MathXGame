@@ -1,82 +1,92 @@
 # MathXGame
 
- # MathXGame
- ## Description
- MathXGame is a simple math game that allows users to practice their math skills through a series of challenges. The game presents users with math problems to solve within a specified time limit and provides feedback on their performance. Users can customize the difficulty level, number range, timer settings, operation selection, number of questions, scoring system, and feedback options to tailor the game to their preferences. MathXGame also includes a feature that allows users to save their preferred challenge settings for future use.
+## Overview
+MathXGame is an engaging and fast-paced math practice game designed to help users improve their arithmetic skills through various challenges. Users can register or log in to start practicing and select from a range of challenges that test different mathematical abilities.
 
- ## Features
- - Challenge Configuration
-	- Number Range: Users can specify the range of numbers used in the challenge.
-	- Timer Settings: Users can customize the time limit for completing the challenge.
-	- Operation Selection: Users can select the types of mathematical operations included in the challenge.
-	- Number of Questions: Users can specify the number of questions they want to attempt in the challenge.
+## Features
+- **User Authentication**: Register and log in to track your progress and challenge history.
+- **Real-Time Feedback**: Instant validation of answers and automatic progression to the next question.
+- **Detailed Statistics**: Comprehensive performance stats after each challenge.
+- **Review System**: Options to review all problems, incorrect problems, or slow responses to enhance learning.
 
-# Challenges TODO:
-- [x] Keyboard Input Challenge
-- [ ] Multiple Choice Challenge
-- [ ] Missing Operator Challenge
-- [ ] Word Problem Challenge
-- [ ] Math Memory Challenge
-- [ ] Inequality Expression Challenge
-- [ ] Variable Equation Challenge
-- [ ] Number Placement Challenge (Simple Version)
-- [ ] Number Placement Challenge (Advanced Version)
-- [ ] True/False Expression Challenge
-- [ ] Sum Combination Challenge
-- [ ] 12-Question Math Challenge
+## Challenges
+The game currently offers the following challenges:
 
-# Database
-## Users Table
-| Column    | Data Type | Description                          |
-|-----------|-----------|--------------------------------------|
-| user_id   | INT       | Primary Key, unique identifier for each user |
-| username  | VARCHAR   | Username of the user                 |
-| email     | VARCHAR   | Email of the user                    |
-| password  | VARCHAR   | Password (hashed) of the user        |
+- [x] **Keyboard Input Challenge**: Enter answers using keyboard input.
+- [x] **Multiple Choice Challenge**: Select answers from multiple choices.
+- [ ] **Missing Operator Challenge**: Identify missing operators in equations.
+- [ ] **Word Problem Challenge**: Solve word problems by typing answers in words.
+- [ ] **Math Memory Challenge**: Memorize and solve math problems.
+- [ ] **Number Placement Challenge**: Place numbers correctly in equations.
+- [ ] **Comparison Challenge**: Compare two expressions with <, >, or =.
+- [ ] **Solve for X Challenge**: Solve for X in algebraic equations.
+- [ ] **True/False Challenge**: Determine if math statements are true or false.
+- [ ] **Number Combination Challenge**: Combine numbers to reach a target sum.
 
+## Database Structure
+### User
+- **Id**: Unique identifier
+- **Username**: User's login name
+- **Password**: User's password
+- **Email**: User's email
+- **FirstName**: User's first name (optional)
+- **LastName**: User's last name (optional)
+- **DateOfBirth**: User's date of birth (optional)
+- **Challenges**: List of challenges completed by the user
+- **Problems**: List of problems encountered by the user
 
-## Challenges Table
-| Column           | Data Type  | Description                                  |
-|------------------|------------|----------------------------------------------|
-| challenge_id     | INT        | Primary Key, unique identifier for each challenge |
-| user_id          | INT        | Foreign Key, references Users(user_id)       |
-| selected_challenge | VARCHAR  | Name or type of the challenge                |
-| min_number       | INT        | Minimum number used in problems              |
-| max_number       | INT        | Maximum number used in problems              |
-| timer_in_seconds | INT        | Duration of the challenge in seconds         |
-| addition         | BOOLEAN    | Indicates if addition problems are included  |
-| subtraction      | BOOLEAN    | Indicates if subtraction problems are included |
-| multiplication   | BOOLEAN    | Indicates if multiplication problems are included |
-| division         | BOOLEAN    | Indicates if division problems are included  |
-| total_problems   | INT        | Total number of problems in the challenge    |
-| solved_problems  | INT        | Number of correctly solved problems          |
-| misses           | INT        | Number of missed problems                    |
-| speed            | DOUBLE     | Average speed of solving problems            |
-| accuracy         | DOUBLE     | Accuracy percentage                          |
-| start_time       | TIMESTAMP  | Timestamp of when the challenge started      |
-| finish_time      | TIMESTAMP  | Timestamp of when the challenge ended        |
+### Challenge
+- **ChallengeId**: Unique identifier
+- **UserId**: Reference to the user
+- **SelectedChallenge**: Type of challenge
+- **TotalProblems**: Total number of problems in the challenge
+- **TimerInSeconds**: Time limit for the challenge
+- **MinNumber**: Minimum number in problems
+- **MaxNumber**: Maximum number in problems
+- **Addition**: Includes addition problems
+- **Subtraction**: Includes subtraction problems
+- **Multiplication**: Includes multiplication problems
+- **Division**: Includes division problems
+- **SolvedProblems**: Number of correctly solved problems
+- **Misses**: Number of missed problems
+- **Speed**: Average time taken per problem
+- **Accuracy**: Accuracy percentage
+- **Score**: Overall challenge score
+- **StartTime**: Challenge start time
+- **FinishTime**: Challenge finish time
 
+### Problem
+- **ProblemId**: Unique identifier
+- **ChallengeId**: Reference to the challenge
+- **UserId**: Reference to the user
+- **Expression**: Math problem expression
+- **RightAnswer**: Correct answer
+- **UserAnswer**: User's answer
+- **IsSolved**: Boolean indicating if the problem was solved correctly
+- **TimeTaken**: Time taken to solve the problem
 
-## Problems Table
-| Column       | Data Type | Description                                  |
-|--------------|-----------|----------------------------------------------|
-| problem_id   | INT       | Primary Key, unique identifier for each problem |
-| challenge_id | INT       | Foreign Key, references Challenges(challenge_id) |
-| user_id      | INT       | Foreign Key, references Users(user_id)       |
-| expression   | VARCHAR   | Math expression (e.g., "5 + 3")              |
-| right_answer | VARCHAR   | Correct answer to the expression             |
-| user_answer  | VARCHAR   | User’s answer to the problem                 |
-| is_solved    | BOOLEAN   | Whether the problem was solved correctly     |
-| time_taken   | INT       | Time taken by the user to solve the problem (in seconds) |
+## Key Features
+- **Speed**: Automatically validates correct answers and moves to the next question.
+- **Immediate Feedback**: Shows correct answer and history of the last 5 problems for incorrect answers.
+- **Timing**: Displays the time taken for each answer.
+- **Quick Selection**: Choose multiple-choice answers by pressing their number for faster gameplay.
 
+## Todo
+- [ ] Implement the remaining challenges.
+- [ ] Add a leaderboard for challenges.
+- [ ] Make the game more interactive with animations and sound effects.
+- [ ] Add more customization options for challenges.
+- [ ] Add more challenges.
+- [ ] Add more statistics.	
+- [ ] Add a multiplayer mode.
 
-
-
-
-# Note Nessacry Packages
+## Note Necessary Packages
 ```bash
 dotnet add package Microsoft.EntityFrameworkCore 
 dotnet add package Microsoft.EntityFrameworkCore.Sqlite
 dotnet add package Microsoft.EntityFrameworkCore.Design
 dotnet add package Microsoft.EntityFrameworkCore.Tools
 ```
+
+## Demo Video
+
