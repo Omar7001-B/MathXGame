@@ -52,8 +52,10 @@ namespace MathXGame.Controllers
 
         public IActionResult Index()
         {
+
             // Hello This is ##############################
             // Hello This is ##############################
+
             // Check if user is logged in
             var currentUser = HttpContext.Session.GetString("CurrentUser");
             if (!string.IsNullOrEmpty(currentUser))

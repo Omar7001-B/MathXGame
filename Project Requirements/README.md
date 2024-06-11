@@ -59,5 +59,11 @@ This project fulfills various requirements as specified in the project guideline
 - [x] [Image Handling](/Views/Account/Settings.cshtml#L180-L194): Implements functionality to manipulate images using JavaScript.
 
 
+
+https://github.com/Omar7001-B/MathXGame/assets/115028809/cb245c67-1366-4821-ab0d-e4d569d4bc4a
+
+
+
+
 ## 13. onSubmit Event (1 Pts)
 - [x] [Form Submission](/Views/Challenges/ViewChallenge.cshtml#L157-L163): Handles form submission events for processing data.
