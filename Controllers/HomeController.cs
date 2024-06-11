@@ -59,6 +59,7 @@ namespace MathXGame.Controllers
                 // User is not logged in, redirect to the login page
                 return RedirectToAction("Login", "Account");
             }
+            // Hello from Master
         }
 
         public IActionResult UserStatistics()
