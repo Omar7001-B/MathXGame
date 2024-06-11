@@ -45,9 +45,15 @@ namespace MathXGame.Controllers
             _logger = logger;
         }
 
+
+
+
+
+
         public IActionResult Index()
         {
-            // Hello This is Edit2
+            // Hello This is ##############################
+            // Hello This is ##############################
             // Check if user is logged in
             var currentUser = HttpContext.Session.GetString("CurrentUser");
             if (!string.IsNullOrEmpty(currentUser))
@@ -60,6 +66,8 @@ namespace MathXGame.Controllers
                 // User is not logged in, redirect to the login page
                 return RedirectToAction("Login", "Account");
             }
+            // Hello from Master
+            // kasdfkl;sad;fjk;sj;dafkj;dsj;k
         }
 
         public IActionResult UserStatistics()
