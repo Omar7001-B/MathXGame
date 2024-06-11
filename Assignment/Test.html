@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>onfocus and onblur Events Example</title>
+</head>
+
+<body>
+    <input type="text" id="focusInput" placeholder="Focus on me">
+    <script>
+        document.getElementById("focusInput").onfocus = function () {
+            this.style.backgroundColor = "lightyellow";
+        };
+        document.getElementById("focusInput").onblur = function () {
+            this.style.backgroundColor = "white";
+        };
+    </script>
+</body>
+
+</html>
